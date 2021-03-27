@@ -31,18 +31,14 @@ int main(int argc, char *argv[])
                 stream >> boardData[i][j];
 
 
-    QPixmap backGround("Grass.png"), border("Bricks.png");
+    QPixmap backGround("black.png"), border("color.png");
     border = border.scaledToWidth(40);
     border = border.scaledToHeight(40);
     backGround = backGround.scaledToWidth(40);
     backGround = backGround.scaledToHeight(40);
     QGraphicsPixmapItem boardImg[20][20];
 
-<<<<<<< HEAD
-    FOR(i,0,20){
-=======
     FOR(i,0,20)
->>>>>>> a06d533e7d05e205d96c79fad009ff003723d2a0
             FOR(j,0,20){
             if(boardData[i][j]==-1)
                 boardImg[i][j].setPixmap(border);
@@ -51,7 +47,6 @@ int main(int argc, char *argv[])
             boardImg[i][j].setPos(40+(j*40),40+(i*40));
             scene.addItem(&boardImg[i][j]);
         }
-}
     view.setScene(&scene);
     view.show();
     return a.exec();
