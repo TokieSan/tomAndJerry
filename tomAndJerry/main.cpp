@@ -38,7 +38,11 @@ int main(int argc, char *argv[])
     backGround = backGround.scaledToHeight(40);
     QGraphicsPixmapItem boardImg[20][20];
 
+<<<<<<< HEAD
     FOR(i,0,20){
+=======
+    FOR(i,0,20)
+>>>>>>> a06d533e7d05e205d96c79fad009ff003723d2a0
             FOR(j,0,20){
             if(boardData[i][j]==-1)
                 boardImg[i][j].setPixmap(border);
