@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
                 stream >> boardData[i][j];
 
 
-    QPixmap backGround("black.png"), border("color.png");
+    QPixmap backGround("Grass.png"), border("Bricks.png");
     border = border.scaledToWidth(40);
     border = border.scaledToHeight(40);
     backGround = backGround.scaledToWidth(40);
