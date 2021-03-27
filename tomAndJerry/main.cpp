@@ -31,14 +31,12 @@ int main(int argc, char *argv[])
                 stream >> boardData[i][j];
 
 
-    QPixmap backGround("../color.jpg"), border("../black.jpg");
+    QPixmap backGround("black.png"), border("color.png");
     border = border.scaledToWidth(40);
     border = border.scaledToHeight(40);
     backGround = backGround.scaledToWidth(40);
     backGround = backGround.scaledToHeight(40);
     QGraphicsPixmapItem boardImg[20][20];
-
-
 
     FOR(i,0,20)
             FOR(j,0,20){
