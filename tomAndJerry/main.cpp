@@ -5,12 +5,14 @@
 #include <QTextStream>
 #include <QGraphicsPixmapItem>
 #include <QTimer>
+#include "../mazeGenerator.cpp"
 
 #define tt(n) for (int i=0; i<n; i++)
 #define FOR(i,a,n) for (auto i=a; i!=n; i++)
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     QApplication a(argc, argv);
     QGraphicsView view;
     QGraphicsScene scene;
@@ -21,6 +23,7 @@ int main(int argc, char *argv[])
 
     int boardData[20][20];
 
+    gimmeMaze();
     QFile file("file");
 
     file.open(QIODevice::ReadOnly);
