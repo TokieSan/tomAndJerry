@@ -1006,7 +1006,7 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../tomAndJerry/main.cpp 
+main.o: ../tomAndJerry/main.cpp ../mazeGenerator.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tomAndJerry/main.cpp
 
 tom.o: ../tomAndJerry/tom.cpp ../tomAndJerry/tom.h
