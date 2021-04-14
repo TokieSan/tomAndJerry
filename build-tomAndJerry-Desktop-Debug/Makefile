@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = tomAndJerry1.0.0
-DISTDIR = /home/elt0khy/shared/study/cs/cs2/lab/QT/labTask/build-tomAndJerry-Desktop-Debug/.tmp/tomAndJerry1.0.0
+DISTDIR = /home/elt0khy/tomAndJerry/build-tomAndJerry-Desktop-Debug/.tmp/tomAndJerry1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) /usr/lib/libQt5Widgets.so /usr/lib/libQt5Gui.so /usr/lib/libQt5Core.so -lGL -lpthread   
@@ -52,8 +52,11 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../tomAndJerry/main.cpp 
-OBJECTS       = main.o
+SOURCES       = ../tomAndJerry/main.cpp \
+		../tomAndJerry/tom.cpp moc_tom.cpp
+OBJECTS       = main.o \
+		tom.o \
+		moc_tom.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -320,6 +323,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		../tomAndJerry/.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -340,7 +344,8 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../tomAndJerry/tomAndJerry.pro  ../tomAndJerry/main.cpp
+		../tomAndJerry/tomAndJerry.pro ../tomAndJerry/tom.h ../tomAndJerry/main.cpp \
+		../tomAndJerry/tom.cpp
 QMAKE_TARGET  = tomAndJerry
 DESTDIR       = 
 TARGET        = tomAndJerry
@@ -618,6 +623,7 @@ Makefile: ../tomAndJerry/tomAndJerry.pro /usr/lib/qt/mkspecs/linux-g++/qmake.con
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -906,6 +912,7 @@ Makefile: ../tomAndJerry/tomAndJerry.pro /usr/lib/qt/mkspecs/linux-g++/qmake.con
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -942,7 +949,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../tomAndJerry/main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/tom.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/main.cpp ../tomAndJerry/tom.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -974,8 +982,14 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all:
+compiler_moc_header_make_all: moc_tom.cpp
 compiler_moc_header_clean:
+	-$(DEL_FILE) moc_tom.cpp
+moc_tom.cpp: ../tomAndJerry/tom.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include /home/elt0khy/tomAndJerry/build-tomAndJerry-Desktop-Debug/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/elt0khy/tomAndJerry/tomAndJerry -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/10.2.0 -I/usr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/10.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed -I/usr/include ../tomAndJerry/tom.h -o moc_tom.cpp
+
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
@@ -988,12 +1002,18 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
-main.o: ../tomAndJerry/main.cpp 
+main.o: ../tomAndJerry/main.cpp ../mazeGenerator.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tomAndJerry/main.cpp
+
+tom.o: ../tomAndJerry/tom.cpp ../tomAndJerry/tom.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tom.o ../tomAndJerry/tom.cpp
+
+moc_tom.o: moc_tom.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tom.o moc_tom.cpp
 
 ####### Install
 

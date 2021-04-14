@@ -9,9 +9,11 @@
 #include "cheese.h"
 #include "pellet.h"
 #include <QTimer>
+#include "../mazeGenerator.cpp"
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
     QApplication a(argc, argv);
     QGraphicsView view;
     QGraphicsScene scene;
@@ -34,6 +36,7 @@ int main(int argc, char *argv[])
             boardData[i][j] = temp.toInt();
         }
 
+
     QGraphicsPixmapItem boardImages[15][15];
     QPixmap q1("Bricks.png");
     q1 = q1.scaledToWidth(50);
@@ -54,6 +57,7 @@ int main(int argc, char *argv[])
 
             scene.addItem(&boardImages[i][j]);
         }
+
     Tom t(13,7,boardData);
     scene.addItem(&t);
 
