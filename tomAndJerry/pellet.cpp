@@ -4,7 +4,7 @@ pellet::pellet(int initialRow, int initialColumn)
 {
     row3 = initialRow;
     column3 = initialColumn;
-    QPixmap pel("Pellet.png");
+    QPixmap pel("PelletWhite.png");
     pel = pel.scaledToWidth(50);
     pel = pel.scaledToHeight(50);
     setPixmap(pel);

@@ -52,10 +52,20 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../tomAndJerry/main.cpp \
-		../tomAndJerry/tom.cpp moc_tom.cpp
-OBJECTS       = main.o \
+SOURCES       = ../tomAndJerry/cheese.cpp \
+		../tomAndJerry/info.cpp \
+		../tomAndJerry/jerry.cpp \
+		../tomAndJerry/main.cpp \
+		../tomAndJerry/pellet.cpp \
+		../tomAndJerry/tom.cpp moc_jerry.cpp \
+		moc_tom.cpp
+OBJECTS       = cheese.o \
+		info.o \
+		jerry.o \
+		main.o \
+		pellet.o \
 		tom.o \
+		moc_jerry.o \
 		moc_tom.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
@@ -99,6 +109,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/modules/qt_KIOGui.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KIOWidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_Kirigami2.pri \
+		/usr/lib/qt/mkspecs/modules/qt_KItemModels.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KItemViews.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KJobWidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KJS.pri \
@@ -344,7 +355,15 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/exceptions.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
-		../tomAndJerry/tomAndJerry.pro ../tomAndJerry/tom.h ../tomAndJerry/main.cpp \
+		../tomAndJerry/tomAndJerry.pro ../tomAndJerry/cheese.h \
+		../tomAndJerry/info.h \
+		../tomAndJerry/jerry.h \
+		../tomAndJerry/pellet.h \
+		../tomAndJerry/tom.h ../tomAndJerry/cheese.cpp \
+		../tomAndJerry/info.cpp \
+		../tomAndJerry/jerry.cpp \
+		../tomAndJerry/main.cpp \
+		../tomAndJerry/pellet.cpp \
 		../tomAndJerry/tom.cpp
 QMAKE_TARGET  = tomAndJerry
 DESTDIR       = 
@@ -399,6 +418,7 @@ Makefile: ../tomAndJerry/tomAndJerry.pro /usr/lib/qt/mkspecs/linux-g++/qmake.con
 		/usr/lib/qt/mkspecs/modules/qt_KIOGui.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KIOWidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_Kirigami2.pri \
+		/usr/lib/qt/mkspecs/modules/qt_KItemModels.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KItemViews.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KJobWidgets.pri \
 		/usr/lib/qt/mkspecs/modules/qt_KJS.pri \
@@ -688,6 +708,7 @@ Makefile: ../tomAndJerry/tomAndJerry.pro /usr/lib/qt/mkspecs/linux-g++/qmake.con
 /usr/lib/qt/mkspecs/modules/qt_KIOGui.pri:
 /usr/lib/qt/mkspecs/modules/qt_KIOWidgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_Kirigami2.pri:
+/usr/lib/qt/mkspecs/modules/qt_KItemModels.pri:
 /usr/lib/qt/mkspecs/modules/qt_KItemViews.pri:
 /usr/lib/qt/mkspecs/modules/qt_KJobWidgets.pri:
 /usr/lib/qt/mkspecs/modules/qt_KJS.pri:
@@ -949,8 +970,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../tomAndJerry/tom.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../tomAndJerry/main.cpp ../tomAndJerry/tom.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/cheese.h ../tomAndJerry/info.h ../tomAndJerry/jerry.h ../tomAndJerry/pellet.h ../tomAndJerry/tom.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/cheese.cpp ../tomAndJerry/info.cpp ../tomAndJerry/jerry.cpp ../tomAndJerry/main.cpp ../tomAndJerry/pellet.cpp ../tomAndJerry/tom.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -982,9 +1003,17 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -std=gnu++11 -Wall -Wextra -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_tom.cpp
+compiler_moc_header_make_all: moc_jerry.cpp moc_tom.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_tom.cpp
+	-$(DEL_FILE) moc_jerry.cpp moc_tom.cpp
+moc_jerry.cpp: ../tomAndJerry/jerry.h \
+		../tomAndJerry/cheese.h \
+		../tomAndJerry/pellet.h \
+		../tomAndJerry/tom.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include /home/elt0khy/tomAndJerry/build-tomAndJerry-Desktop-Debug/moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/elt0khy/tomAndJerry/tomAndJerry -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I. -I/usr/include/c++/10.2.0 -I/usr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/10.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed -I/usr/include ../tomAndJerry/jerry.h -o moc_jerry.cpp
+
 moc_tom.cpp: ../tomAndJerry/tom.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -1006,11 +1035,34 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: ../tomAndJerry/main.cpp ../mazeGenerator.cpp
+cheese.o: ../tomAndJerry/cheese.cpp ../tomAndJerry/cheese.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cheese.o ../tomAndJerry/cheese.cpp
+
+info.o: ../tomAndJerry/info.cpp ../tomAndJerry/info.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o info.o ../tomAndJerry/info.cpp
+
+jerry.o: ../tomAndJerry/jerry.cpp ../tomAndJerry/jerry.h \
+		../tomAndJerry/cheese.h \
+		../tomAndJerry/pellet.h \
+		../tomAndJerry/tom.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o jerry.o ../tomAndJerry/jerry.cpp
+
+main.o: ../tomAndJerry/main.cpp ../tomAndJerry/tom.h \
+		../tomAndJerry/jerry.h \
+		../tomAndJerry/cheese.h \
+		../tomAndJerry/pellet.h \
+		../tomAndJerry/info.h \
+		../mazeGenerator.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tomAndJerry/main.cpp
+
+pellet.o: ../tomAndJerry/pellet.cpp ../tomAndJerry/pellet.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pellet.o ../tomAndJerry/pellet.cpp
 
 tom.o: ../tomAndJerry/tom.cpp ../tomAndJerry/tom.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tom.o ../tomAndJerry/tom.cpp
+
+moc_jerry.o: moc_jerry.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_jerry.o moc_jerry.cpp
 
 moc_tom.o: moc_tom.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_tom.o moc_tom.cpp

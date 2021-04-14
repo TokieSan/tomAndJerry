@@ -16,7 +16,9 @@ private:
     int row4, column4;
     int data4[15][15];
 public:
+    int score;
     jerry(int initialRow, int initialColumn, int d[15][15]);
+    bool checkIfWon();
     void setRow4(int newRow4);
     int getRow4();
     void setColumn4(int newColumn4);

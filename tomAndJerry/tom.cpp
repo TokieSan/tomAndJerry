@@ -12,6 +12,7 @@ Tom::Tom(int initialRow, int initialColumn, int d[15][15])
     tom = tom.scaledToHeight(50);
     setPixmap(tom);
     setPos(25+50*column1, 25+50*row1);
+    lastRand=0;
 }
 void Tom::setRow1(int newRow1)
 {
@@ -34,31 +35,48 @@ void Tom::keyPressEvent(QKeyEvent * event)
 {
 
     if(event->key() == Qt::Key_Up)
-        direction = 'u';
-
+        move('u');
     else if(event->key() == Qt::Key_Down)
-        direction = 'd';
-
+        move('d');
     else if(event->key() == Qt::Key_Right)
-        direction = 'r';
-
+       move('r');
     else if(event->key() == Qt::Key_Left)
-        direction = 'l';
-
+       move('l');
 }
-void Tom::move()
+void Tom::move(char d)
 {
-    if(direction == 'u' && data1[row1-1][column1] != -1)
+    if(d == 'u' && data1[row1-1][column1] != -1){
        row1--;
+    }
 
-    else if(direction == 'd' && data1[row1+1][column1] != -1)
+    else if(d == 'd' && data1[row1+1][column1] != -1){
         row1++;
+    }
 
-    else if(direction == 'r' && data1[row1][column1+1] != -1)
+    else if(d == 'r' && data1[row1][column1+1] != -1){
         column1++;
+        QPixmap tom("TomRight.png");
+        tom = tom.scaledToWidth(50);
+        tom = tom.scaledToHeight(50);
+        setPixmap(tom);
+    }
 
-    else if(direction == 'l' && data1[row1][column1-1] != -1)
+    else if(d == 'l' && data1[row1][column1-1] != -1){
         column1--;
+        QPixmap tom("Tom.png");
+        tom = tom.scaledToWidth(50);
+        tom = tom.scaledToHeight(50);
+        setPixmap(tom);
+    }
 
     setPos(25+50*column1, 25+50*row1);
+}
+void Tom::randomlyMove(){
+    char tmp[] = {'u', 'd', 'r', 'l'};
+
+    int idx = rand()%4;
+
+    move(tmp[idx]);
+
+    lastRand=idx;
 }

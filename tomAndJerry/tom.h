@@ -9,9 +9,9 @@ class Tom: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;
 private:
-    char direction;
     int row1, column1;
     int data1[15][15];
+    int lastRand;
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
     void setRow1(int newRow1);
@@ -20,7 +20,8 @@ public:
     int getColumn1();
 public slots:
     void keyPressEvent(QKeyEvent * event);
-    void move();
+    void move(char d);
+    void randomlyMove();
 };
 
 #endif // TOM_H

@@ -6,27 +6,34 @@
 #include <QTextStream>
 #include "tom.h"
 #include "jerry.h"
+#include "info.h"
 #include "cheese.h"
 #include "pellet.h"
 #include <QTimer>
+#include <QApplication>
+
 #include "../mazeGenerator.cpp"
 
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
     QApplication a(argc, argv);
-    QGraphicsView view;
     QGraphicsScene scene;
+    QGraphicsView view;
+
+
+
 
     view.setWindowTitle("Tom and Jerry");
-    view.setMinimumSize(800,800);
-    view.setBackgroundBrush(QBrush(Qt::black));
+    view.setFixedSize(1200,800);
+    view.setBackgroundBrush(QBrush(QColor("#111111")));
 
     int boardData[15][15];
     QFile file("board.txt");
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString temp;
+
 
 
     for(int i = 0; i<15; i++)
@@ -38,19 +45,19 @@ int main(int argc, char *argv[])
 
 
     QGraphicsPixmapItem boardImages[15][15];
-    QPixmap q1("Bricks.png");
-    q1 = q1.scaledToWidth(50);
-    q1 = q1.scaledToHeight(50);
-    QPixmap q2("Grass.png");
-    q2 = q2.scaledToWidth(50);
-    q2 = q2.scaledToHeight(50);
+    QPixmap border("color.png");
+    border = border.scaledToWidth(50);
+    border = border.scaledToHeight(50);
+    QPixmap road("black.png");
+    road = road.scaledToWidth(50);
+    road = road.scaledToHeight(50);
     for(int i = 0; i<15; i++)
         for(int j = 0; j<15; j++)
         {
             if (boardData[i][j] == -1)
-                boardImages[i][j].setPixmap(q1);
+                boardImages[i][j].setPixmap(border);
             else
-                boardImages[i][j].setPixmap(q2);
+                boardImages[i][j].setPixmap(road);
 
             boardImages[i][j].setPos(25+50*j, 25+50*i);
 
@@ -79,9 +86,11 @@ int main(int argc, char *argv[])
      pellet p2(3,1);
      scene.addItem(&p2);
 
-     QTimer timer;
-     timer.start(70);
-     timer.connect(&timer,SIGNAL(timeout()),&t, SLOT(move()));
+
+     QTimer tomTimer;
+     tomTimer.start(75);
+     tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(randomlyMove()));
+
 
     view.setScene(&scene);
     view.show();

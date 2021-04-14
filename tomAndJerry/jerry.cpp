@@ -12,6 +12,11 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15])
     jer = jer.scaledToHeight(50);
     setPixmap(jer);
     setPos(25+50*column4, 25+50*row4);
+    score=0;
+
+}
+bool jerry::checkIfWon(){
+    return score==4;
 }
 void jerry::setRow4(int newRow4)
 {
@@ -37,11 +42,21 @@ void jerry::keyPressEvent(QKeyEvent * event)
     else if(event->key() == Qt::Key_Down && data4[row4+1][column4] != -1)
         row4++;
 
-    else if(event->key() == Qt::Key_Right && data4[row4][column4+1] != -1)
+    else if(event->key() == Qt::Key_Right && data4[row4][column4+1] != -1){
         column4++;
+        QPixmap jer("JerryRight.png");
+        jer = jer.scaledToWidth(50);
+        jer = jer.scaledToHeight(50);
+        setPixmap(jer);
+    }
 
-    else if(event->key() == Qt::Key_Left && data4[row4][column4-1] != -1)
+    else if(event->key() == Qt::Key_Left && data4[row4][column4-1] != -1){
         column4--;
+        QPixmap jer("Jerry3.png");
+        jer = jer.scaledToWidth(50);
+        jer = jer.scaledToHeight(50);
+        setPixmap(jer);
+    }
 
     setPos(25+50*column4, 25+50*row4);
 
@@ -57,6 +72,17 @@ void jerry::keyPressEvent(QKeyEvent * event)
             jerr = jerr.scaledToHeight(50);
             setPixmap(jerr);
             setPos(25+50*column4, 25+50*row4);
+
+            score++;
+
+            QGraphicsTextItem x;
+            std::string scoreText="Jerry: ";
+            scoreText.append( std::to_string(score));
+            x.setPlainText(QString::fromUtf8(scoreText.c_str()));
+            x.setDefaultTextColor(QColor("#24d1ac"));
+            x.setX(1000);
+            x.setScale(2);
+            scene()->addItem(&x);
 
             if(row4 == 7 && column4 == 7)
             {
