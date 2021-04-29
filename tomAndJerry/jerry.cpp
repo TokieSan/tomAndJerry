@@ -1,5 +1,6 @@
 #include "jerry.h"
 #include <QMessageBox>
+#include <QTimer>
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15])
 {
@@ -71,6 +72,20 @@ void jerry::keyPressEvent(QKeyEvent * event)
 
     QList<QGraphicsItem*> items = collidingItems();
 
+    if(row4 == 7 && column4 == 7)
+    {
+        hasCheese=false;
+        QPixmap che("Cheese2.png");
+        che=che.scaledToWidth(50);
+        che=che.scaledToHeight(50);
+        setPixmap(che);
+        setPos(25+50&7,25+50*7);
+        QPixmap jer("Jerry3.png");
+        jer = jer.scaledToWidth(50);
+        jer = jer.scaledToHeight(50);
+        setPixmap(jer);
+        setPos(25+50*column4, 25+50*row4);
+    }
     for(int i = 0; i<items.size(); i++)
     {
         if(typeid(*items[i]) == typeid(cheese))
@@ -93,26 +108,29 @@ void jerry::keyPressEvent(QKeyEvent * event)
             x.setScale(2);
             scene()->addItem(&x);
 
-            if(row4 == 7 && column4 == 7)
-            {
-                QPixmap jer("Jerry3.png");
-                jer = jer.scaledToWidth(50);
-                jer = jer.scaledToHeight(50);
-                setPixmap(jer);
-                setPos(25+50*column4, 25+50*row4);
-            }
+
         }
         else if(typeid(*items[i]) == typeid(pellet))
         {
             scene()->removeItem(items[i]);
+            //invincible
         }
         else if(typeid(*items[i]) == typeid(Tom)){
             lives--;
             if(lives<=0){
                 //popup window with "You Lost"
                 QMessageBox msg;
-                msg.setText("This closes in 10 seconds");
-
+                msg.setText("You have lost! Starting a new game");
+                QTimer cntDown;
+                int cnt=10;
+                   QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+                                        if(--cnt < 0){
+                                            cntDown.stop();
+                                            msg.close();
+                                        }
+                                    });
+                   cntDown.start(1000);
+                   msg.exec();
             }
         }
     }
