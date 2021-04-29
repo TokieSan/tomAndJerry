@@ -42,6 +42,16 @@ void Tom::keyPressEvent(QKeyEvent * event)
        move('r');
     else if(event->key() == Qt::Key_Left)
        move('l');
+
+    /*QList<QGraphicsItem*> items = collidingItems();
+
+    for(int i = 0; i<items.size(); i++)
+    {
+        if(typeid(*items[i]) == typeid(jerry)){
+
+        }
+
+    }*/
 }
 void Tom::move(char d)
 {

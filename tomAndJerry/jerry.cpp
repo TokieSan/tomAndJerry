@@ -1,4 +1,5 @@
 #include "jerry.h"
+#include <QMessageBox>
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15])
 {
@@ -13,6 +14,8 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15])
     setPixmap(jer);
     setPos(25+50*column4, 25+50*row4);
     score=0;
+    lives=3;
+    hasCheese=false;
 
 }
 bool jerry::checkIfWon(){
@@ -45,17 +48,23 @@ void jerry::keyPressEvent(QKeyEvent * event)
     else if(event->key() == Qt::Key_Right && data4[row4][column4+1] != -1){
         column4++;
         QPixmap jer("JerryRight.png");
-        jer = jer.scaledToWidth(50);
+        QPixmap jer2("JerryCheese.png");
+       jer = jer.scaledToWidth(50);
         jer = jer.scaledToHeight(50);
-        setPixmap(jer);
+        jer2 = jer2.scaledToWidth(50);
+        jer2 = jer2.scaledToHeight(50);
+        hasCheese?setPixmap(jer2):setPixmap(jer);
     }
 
     else if(event->key() == Qt::Key_Left && data4[row4][column4-1] != -1){
         column4--;
         QPixmap jer("Jerry3.png");
+        QPixmap jer2("JerryCheeseLeft.png");
         jer = jer.scaledToWidth(50);
         jer = jer.scaledToHeight(50);
-        setPixmap(jer);
+        jer2 = jer2.scaledToWidth(50);
+        jer2 = jer2.scaledToHeight(50);
+        hasCheese?setPixmap(jer2):setPixmap(jer);
     }
 
     setPos(25+50*column4, 25+50*row4);
@@ -74,7 +83,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
             setPos(25+50*column4, 25+50*row4);
 
             score++;
-
+            hasCheese=true;
             QGraphicsTextItem x;
             std::string scoreText="Jerry: ";
             scoreText.append( std::to_string(score));
@@ -96,6 +105,15 @@ void jerry::keyPressEvent(QKeyEvent * event)
         else if(typeid(*items[i]) == typeid(pellet))
         {
             scene()->removeItem(items[i]);
+        }
+        else if(typeid(*items[i]) == typeid(Tom)){
+            lives--;
+            if(lives<=0){
+                //popup window with "You Lost"
+                QMessageBox msg;
+                msg.setText("This closes in 10 seconds");
+
+            }
         }
     }
 }

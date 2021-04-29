@@ -13,8 +13,9 @@ class jerry: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;
 private:
-    int row4, column4;
+    int row4, column4, lives;
     int data4[15][15];
+    bool hasCheese;
 public:
     int score;
     jerry(int initialRow, int initialColumn, int d[15][15]);
