@@ -15,15 +15,17 @@ class jerry: public QObject, public QGraphicsPixmapItem
 private:
     int row4, column4, lives;
     int data4[15][15];
-    bool hasCheese;
+    bool hasCheese, invincible;
 public:
     int score;
-    jerry(int initialRow, int initialColumn, int d[15][15]);
+    jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene);
     bool checkIfWon();
     void setRow4(int newRow4);
     int getRow4();
     void setColumn4(int newColumn4);
     int getColumn4();
+    int getScore(){return score;}
+    void doIt(){invincible =false;}
 private slots:
     void keyPressEvent(QKeyEvent * event);
 

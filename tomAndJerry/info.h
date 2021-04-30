@@ -2,12 +2,22 @@
 #define INFO_H
 
 #include <QWidget>
+#include <QtGui>
 #include <QGraphicsTextItem>
+#include <QGraphicsPixmapItem>
+#include <QObject>
+#include <QKeyEvent>
+#include <QList>
+#include "cheese.h"
+#include <QGraphicsScene>
+#include "jerry.h"
 
-class info: public QGraphicsSimpleTextItem
+class info: public QGraphicsTextItem
 {
+private:
 public:
-    info(QGraphicsItem *parent=0);
+    info();
+    void doTheThing(jerry *jer);
 };
 
 #endif // INFO_H

@@ -21,9 +21,6 @@ int main(int argc, char *argv[])
     QGraphicsScene scene;
     QGraphicsView view;
 
-
-
-
     view.setWindowTitle("Tom and Jerry");
     view.setFixedSize(1200,800);
     view.setBackgroundBrush(QBrush(QColor("#111111")));
@@ -68,10 +65,18 @@ int main(int argc, char *argv[])
     Tom t(13,7,boardData);
     scene.addItem(&t);
 
-    jerry j(7,7,boardData);
+    jerry j(7,7,boardData,  scene);
     scene.addItem(&j);
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
+
+    info inf;
+    QTimer infoTimer;
+    infoTimer.start(50);
+    infoTimer.connect(&infoTimer, SIGNAL(timeout()),&inf, SLOT(doTheThing(&j)));
+
+    scene.addItem(&inf);
+
 
     cheese c1(1,1);
      scene.addItem(&c1);
@@ -90,7 +95,6 @@ int main(int argc, char *argv[])
      QTimer tomTimer;
      tomTimer.start(75);
      tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(randomlyMove()));
-
 
     view.setScene(&scene);
     view.show();

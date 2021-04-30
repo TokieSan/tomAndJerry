@@ -1,8 +1,8 @@
 #include "jerry.h"
 #include <QMessageBox>
 #include <QTimer>
-
-jerry::jerry(int initialRow, int initialColumn, int d[15][15])
+#include "info.h"
+jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
     for(int i = 0; i<15; i++)
         for(int j = 0; j<15; j++)
@@ -17,7 +17,7 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15])
     score=0;
     lives=3;
     hasCheese=false;
-
+    invincible=false;
 }
 bool jerry::checkIfWon(){
     return score==4;
@@ -72,19 +72,24 @@ void jerry::keyPressEvent(QKeyEvent * event)
 
     QList<QGraphicsItem*> items = collidingItems();
 
-    if(row4 == 7 && column4 == 7)
+    if(row4 == 7 && column4 == 7 && hasCheese)
     {
         hasCheese=false;
-        QPixmap che("Cheese2.png");
-        che=che.scaledToWidth(50);
-        che=che.scaledToHeight(50);
-        setPixmap(che);
-        setPos(25+50&7,25+50*7);
+        score++;
         QPixmap jer("Jerry3.png");
         jer = jer.scaledToWidth(50);
         jer = jer.scaledToHeight(50);
         setPixmap(jer);
         setPos(25+50*column4, 25+50*row4);
+        QPixmap che("Cheese2.png");
+        che=che.scaledToWidth(50);
+        che=che.scaledToHeight(50);
+        setPixmap(che);
+        QGraphicsPixmapItem ch;
+        ch.setPixmap(che);
+        scene()->addItem(&ch);
+        ch.setPos(25+50*7,25+50*7);
+
     }
     for(int i = 0; i<items.size(); i++)
     {
@@ -99,14 +104,6 @@ void jerry::keyPressEvent(QKeyEvent * event)
 
             score++;
             hasCheese=true;
-            QGraphicsTextItem x;
-            std::string scoreText="Jerry: ";
-            scoreText.append( std::to_string(score));
-            x.setPlainText(QString::fromUtf8(scoreText.c_str()));
-            x.setDefaultTextColor(QColor("#24d1ac"));
-            x.setX(1000);
-            x.setScale(2);
-            scene()->addItem(&x);
 
 
         }
@@ -114,9 +111,20 @@ void jerry::keyPressEvent(QKeyEvent * event)
         {
             scene()->removeItem(items[i]);
             //invincible
+            //maybe add sth in the future to make jerry bigger when invincible
+            int cnt = 10;
+            invincible=true;
+            QTimer cntDown;
+             QObject::connect(&cntDown, &QTimer::timeout, [this,&cnt, &cntDown]()->void{
+            if(--cnt<0){
+                invincible = false;
+                cntDown.stop();
+            }
+                     });
+                 cntDown.start(10000);
         }
         else if(typeid(*items[i]) == typeid(Tom)){
-            lives--;
+            if(!invincible) lives--;
             if(lives<=0){
                 //popup window with "You Lost"
                 QMessageBox msg;
