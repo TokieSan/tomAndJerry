@@ -1,7 +1,9 @@
 #include "jerry.h"
 #include <QMessageBox>
 #include <QTimer>
-#include "info.h"
+#include <QThread>
+#include <QEventLoop>
+
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
     for(int i = 0; i<15; i++)
@@ -9,6 +11,7 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
             data4[i][j] = d[i][j];
     row4 = initialRow;
     column4 = initialColumn;
+
     QPixmap jer("Jerry3.png");
     jer = jer.scaledToWidth(50);
     jer = jer.scaledToHeight(50);
@@ -18,13 +21,49 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
     lives=3;
     hasCheese=false;
     invincible=false;
+    std::string scoreText="Cheese: ";
+    scoreText.append( std::to_string(this->getScore()));
+    x.setPlainText(QString::fromUtf8(scoreText.c_str()));
+    x.setDefaultTextColor(QColor("#24d1ac"));
+    x.setX(850);
+    x.setScale(2);
+    scene.addItem(&x);
+    scene.addItem(&cheeseR);
+    scoreText="Lives: ";
+    scoreText.append( std::to_string(lives));
+    y.setPlainText(QString::fromUtf8(scoreText.c_str()));
+    y.setDefaultTextColor(QColor("#24d1ac"));
+    y.setX(850);
+    y.setY(100);
+    y.setScale(2);
+    scene.addItem(&y);
+
 }
 bool jerry::checkIfWon(){
     return score==4;
 }
+void jerry::doTheThing(jerry *jer){
+    std::string scoreText="Cheese: ";
+    scoreText.append( std::to_string(jer->getScore()));
+    x.setPlainText(QString::fromUtf8(scoreText.c_str()));
+    x.setDefaultTextColor(QColor("#24d1ac"));
+    x.setX(850);
+    x.setScale(2);
+    scene()->addItem(&x);
+}
 void jerry::setRow4(int newRow4)
 {
     row4 = newRow4;
+}
+void jerry::updateLives(){
+    std::string scoreText="Lives: ";
+    scoreText.append( std::to_string(lives));
+    y.setPlainText(QString::fromUtf8(scoreText.c_str()));
+    y.setDefaultTextColor(QColor("#24d1ac"));
+    y.setX(850);
+    y.setY(100);
+    y.setScale(2);
+    scene()->addItem(&y);
 }
 int jerry::getRow4()
 {
@@ -81,14 +120,13 @@ void jerry::keyPressEvent(QKeyEvent * event)
         jer = jer.scaledToHeight(50);
         setPixmap(jer);
         setPos(25+50*column4, 25+50*row4);
-        QPixmap che("Cheese2.png");
-        che=che.scaledToWidth(50);
-        che=che.scaledToHeight(50);
-        setPixmap(che);
-        QGraphicsPixmapItem ch;
-        ch.setPixmap(che);
-        scene()->addItem(&ch);
-        ch.setPos(25+50*7,25+50*7);
+        QPixmap ch("Cheese2.png");
+        ch = ch.scaledToHeight(50);
+        ch = ch.scaledToWidth(50);
+        cheeseR.setPixmap(ch);
+        cheeseR.setPos(25+50*7, 25+50*7);
+        scene()->addItem(&cheeseR);
+        doTheThing(this);
 
     }
     for(int i = 0; i<items.size(); i++)
@@ -102,7 +140,6 @@ void jerry::keyPressEvent(QKeyEvent * event)
             setPixmap(jerr);
             setPos(25+50*column4, 25+50*row4);
 
-            score++;
             hasCheese=true;
 
 
@@ -112,33 +149,33 @@ void jerry::keyPressEvent(QKeyEvent * event)
             scene()->removeItem(items[i]);
             //invincible
             //maybe add sth in the future to make jerry bigger when invincible
-            int cnt = 10;
             invincible=true;
-            QTimer cntDown;
-             QObject::connect(&cntDown, &QTimer::timeout, [this,&cnt, &cntDown]()->void{
-            if(--cnt<0){
-                invincible = false;
-                cntDown.stop();
-            }
-                     });
-                 cntDown.start(10000);
+            QEventLoop loop;
+            QTimer::singleShot(5000, &loop, &QEventLoop::quit);
+            loop.exec();
+            invincible=false;
         }
+
         else if(typeid(*items[i]) == typeid(Tom)){
             if(!invincible) lives--;
+            updateLives();
             if(lives<=0){
                 //popup window with "You Lost"
                 QMessageBox msg;
                 msg.setText("You have lost! Starting a new game");
                 QTimer cntDown;
-                int cnt=10;
-                   QObject::connect(&cntDown, &QTimer::timeout, [&msg,&cnt, &cntDown]()->void{
+                int cnt=3;
+                   QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
                                         if(--cnt < 0){
                                             cntDown.stop();
                                             msg.close();
+                                            lives=3;
+                                            this->updateLives();
                                         }
                                     });
                    cntDown.start(1000);
                    msg.exec();
+                   //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
             }
         }
     }

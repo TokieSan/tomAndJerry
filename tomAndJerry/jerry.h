@@ -8,7 +8,6 @@
 #include <QGraphicsScene>
 #include "pellet.h"
 #include "tom.h"
-
 class jerry: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;
@@ -16,6 +15,11 @@ private:
     int row4, column4, lives;
     int data4[15][15];
     bool hasCheese, invincible;
+    QGraphicsTextItem x;
+    QGraphicsTextItem y;
+    QGraphicsPixmapItem cheeseR;
+
+
 public:
     int score;
     jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene);
@@ -26,6 +30,11 @@ public:
     int getColumn4();
     int getScore(){return score;}
     void doIt(){invincible =false;}
+    void doTheThing(jerry *jer);
+    void setItToFls(){invincible=false;}
+    void updateLives();
+    void updateScore();
+
 private slots:
     void keyPressEvent(QKeyEvent * event);
 

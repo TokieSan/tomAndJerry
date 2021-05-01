@@ -6,13 +6,10 @@
 #include <QTextStream>
 #include "tom.h"
 #include "jerry.h"
-#include "info.h"
 #include "cheese.h"
 #include "pellet.h"
 #include <QTimer>
 #include <QApplication>
-
-#include "../mazeGenerator.cpp"
 
 int main(int argc, char *argv[])
 {
@@ -69,14 +66,6 @@ int main(int argc, char *argv[])
     scene.addItem(&j);
     j.setFlag(QGraphicsPixmapItem::ItemIsFocusable);
     j.setFocus();
-
-    info inf;
-    QTimer infoTimer;
-    infoTimer.start(50);
-    infoTimer.connect(&infoTimer, SIGNAL(timeout()),&inf, SLOT(doTheThing(&j)));
-
-    scene.addItem(&inf);
-
 
     cheese c1(1,1);
      scene.addItem(&c1);

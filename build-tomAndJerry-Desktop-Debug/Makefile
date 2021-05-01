@@ -53,14 +53,12 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../tomAndJerry/cheese.cpp \
-		../tomAndJerry/info.cpp \
 		../tomAndJerry/jerry.cpp \
 		../tomAndJerry/main.cpp \
 		../tomAndJerry/pellet.cpp \
 		../tomAndJerry/tom.cpp moc_jerry.cpp \
 		moc_tom.cpp
 OBJECTS       = cheese.o \
-		info.o \
 		jerry.o \
 		main.o \
 		pellet.o \
@@ -356,11 +354,9 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		../tomAndJerry/tomAndJerry.pro ../tomAndJerry/cheese.h \
-		../tomAndJerry/info.h \
 		../tomAndJerry/jerry.h \
 		../tomAndJerry/pellet.h \
 		../tomAndJerry/tom.h ../tomAndJerry/cheese.cpp \
-		../tomAndJerry/info.cpp \
 		../tomAndJerry/jerry.cpp \
 		../tomAndJerry/main.cpp \
 		../tomAndJerry/pellet.cpp \
@@ -970,8 +966,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../tomAndJerry/cheese.h ../tomAndJerry/info.h ../tomAndJerry/jerry.h ../tomAndJerry/pellet.h ../tomAndJerry/tom.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../tomAndJerry/cheese.cpp ../tomAndJerry/info.cpp ../tomAndJerry/jerry.cpp ../tomAndJerry/main.cpp ../tomAndJerry/pellet.cpp ../tomAndJerry/tom.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/cheese.h ../tomAndJerry/jerry.h ../tomAndJerry/pellet.h ../tomAndJerry/tom.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../tomAndJerry/cheese.cpp ../tomAndJerry/jerry.cpp ../tomAndJerry/main.cpp ../tomAndJerry/pellet.cpp ../tomAndJerry/tom.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1038,9 +1034,6 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 cheese.o: ../tomAndJerry/cheese.cpp ../tomAndJerry/cheese.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cheese.o ../tomAndJerry/cheese.cpp
 
-info.o: ../tomAndJerry/info.cpp ../tomAndJerry/info.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o info.o ../tomAndJerry/info.cpp
-
 jerry.o: ../tomAndJerry/jerry.cpp ../tomAndJerry/jerry.h \
 		../tomAndJerry/cheese.h \
 		../tomAndJerry/pellet.h \
@@ -1051,7 +1044,6 @@ main.o: ../tomAndJerry/main.cpp ../tomAndJerry/tom.h \
 		../tomAndJerry/jerry.h \
 		../tomAndJerry/cheese.h \
 		../tomAndJerry/pellet.h \
-		../tomAndJerry/info.h \
 		../mazeGenerator.cpp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tomAndJerry/main.cpp
 
