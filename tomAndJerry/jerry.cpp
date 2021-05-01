@@ -3,6 +3,8 @@
 #include <QTimer>
 #include <QThread>
 #include <QEventLoop>
+#include <QApplication>
+#include <QProcess>
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
@@ -127,11 +129,28 @@ void jerry::keyPressEvent(QKeyEvent * event)
         cheeseR.setPos(25+50*7, 25+50*7);
         scene()->addItem(&cheeseR);
         doTheThing(this);
+        if(score==4){
+            QMessageBox msg;
+            msg.setText("You have won!");
+            QTimer cntDown;
+            int cnt=8;
+               QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
+                                    if(--cnt < 0){
+                                        cntDown.stop();
+                                        msg.close();
+                                    }
+                                });
+               cntDown.start(1000);
+               msg.exec();
+               qApp->quit();
+               QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+               //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
+        }
 
     }
     for(int i = 0; i<items.size(); i++)
     {
-        if(typeid(*items[i]) == typeid(cheese))
+        if(typeid(*items[i]) == typeid(cheese) && !hasCheese)
         {
             scene()->removeItem(items[i]);
             QPixmap jerr("JerryCheese.png");
@@ -162,7 +181,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
             if(lives<=0){
                 //popup window with "You Lost"
                 QMessageBox msg;
-                msg.setText("You have lost! Starting a new game");
+                msg.setText("You have lost!");
                 QTimer cntDown;
                 int cnt=3;
                    QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
@@ -175,6 +194,8 @@ void jerry::keyPressEvent(QKeyEvent * event)
                                     });
                    cntDown.start(1000);
                    msg.exec();
+                   qApp->quit();
+                   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
                    //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
             }
         }
