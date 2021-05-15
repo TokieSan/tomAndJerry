@@ -1,10 +1,51 @@
 #include "tom.h"
 
+bool validLimits(int x, int y, int nx, int ny) {
+    if(
+            x<0 ||
+            x>=nx ||
+            y<0 ||
+            y>=ny
+        ) return false;
+    return true;
+
+}
+
 Tom::Tom(int initialRow, int initialColumn, int d[15][15])
 {
     for(int i = 0; i<15; i++)
         for(int j = 0; j<15; j++)
             data1[i][j] = d[i][j];
+    adj.resize(225);
+    dist.resize(225,1e9);
+    road.resize(225,-1);
+
+    for(int i=0; i<15; i++)
+         for(int j = 0; j<15; j++){
+             if(data1[i][j]==-1) continue;
+            if(validLimits(i-1,j,15,15))
+                if(data1[i-1][j]!=-1){
+                   adj[data1[i][j]].push_back(data1[i-1][j]);
+                   adj[data1[i-1][j]].push_back(data1[i][j]);
+                }
+            if(validLimits(i+1,j,15,15))
+                if(data1[i+1][j]!=-1){
+                   adj[data1[i][j]].push_back(data1[i+1][j]);
+                   adj[data1[i+1][j]].push_back(data1[i][j]);
+                }
+
+            if(validLimits(i,j-1,15,15))
+                if(data1[i][j-1]!=-1){
+                   adj[data1[i][j]].push_back(data1[i][j-1]);
+                   adj[data1[i][j-1]].push_back(data1[i][j]);
+                }
+            if(validLimits(i,j+1,15,15))
+                if(data1[i][j+1]!=-1){
+                   adj[data1[i][j]].push_back(data1[i][j+1]);
+                   adj[data1[i][j+1]].push_back(data1[i][j]);
+                }
+
+        }
     row1 = initialRow;
     column1 = initialColumn;
     QPixmap tom("Tom.png");
@@ -81,6 +122,7 @@ void Tom::move(char d)
 
     setPos(25+50*column1, 25+50*row1);
 }
+
 void Tom::randomlyMove(){
     char tmp[] = {'u', 'd', 'r', 'l'};
 
@@ -89,4 +131,57 @@ void Tom::randomlyMove(){
     move(tmp[idx]);
 
     lastRand=idx;
+}
+void Tom::dij(int s){
+    dist[s]=0;
+    road[s]=s;
+
+    std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<std::pair<int,int>> > p;
+    p.push({0,s});
+    while(!p.empty()){
+        int u = p.top().second;
+        p.pop();
+        for(auto i=adj[u].begin(); i!=adj[u].end(); i++){
+            int v = *i;
+            if(dist[v]>dist[u]+1){
+                dist[v]=dist[u]+1;
+                p.push({dist[v], v});
+                road[v]=u;
+            }
+        }
+    }
+
+}
+std::pair<int,int> Tom::getPos(int x){
+    for(int i=0; i<15; i++){
+        for(int j=0; j<15; j++)
+            if(data1[i][j]==x)
+                return {i,j};
+    }
+    return{-1,-1};
+}
+void Tom::toJerry(){
+    int jerpos=55;
+    // you should make this as input from the connect in main
+    int tompos=data1[row1][column1];
+    dij(tompos);
+    if(tompos==jerpos) return;
+    std::vector<int> ans;
+    while(jerpos!=tompos){
+        ans.push_back(jerpos);
+        jerpos=road[jerpos];
+    }
+    reverse(ans.begin(), ans.end());
+    std::pair<int,int> f = getPos(ans[0]);
+    if(f.first>row1){
+        move('d');
+    } else if(f.first<row1){
+        move('u');
+    } else {
+        if(f.second<column1)
+            move('l');
+        else
+            move('r');
+    }
+
 }

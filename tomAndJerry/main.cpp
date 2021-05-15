@@ -10,6 +10,7 @@
 #include "pellet.h"
 #include <QTimer>
 #include <QApplication>
+#include <QSignalMapper>
 
 int main(int argc, char *argv[])
 {
@@ -82,8 +83,16 @@ int main(int argc, char *argv[])
 
 
      QTimer tomTimer;
-     tomTimer.start(75);
-     tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(randomlyMove()));
+     tomTimer.start(225);
+
+     /*
+     QObject::connect(btn_start, SIGNAL(clicked()), whiteClock, SLOT(startClock()));
+     QObject::connect(signalMapper, SIGNAL(mapped(QWidget*)), whiteClock, SLOT(updateLED(QWidget*)));
+     QObject::connect(btn_start, SIGNAL(clicked()), signalMapper, SLOT(map()));
+     signalMapper->setMapping(btn_start, btn_ledWhite);
+     */
+
+     tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(toJerry()));
 
     view.setScene(&scene);
     view.show();

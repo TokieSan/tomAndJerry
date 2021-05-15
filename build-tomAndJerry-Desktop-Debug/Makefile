@@ -1043,8 +1043,7 @@ jerry.o: ../tomAndJerry/jerry.cpp ../tomAndJerry/jerry.h \
 main.o: ../tomAndJerry/main.cpp ../tomAndJerry/tom.h \
 		../tomAndJerry/jerry.h \
 		../tomAndJerry/cheese.h \
-		../tomAndJerry/pellet.h \
-		../mazeGenerator.cpp
+		../tomAndJerry/pellet.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../tomAndJerry/main.cpp
 
 pellet.o: ../tomAndJerry/pellet.cpp ../tomAndJerry/pellet.h

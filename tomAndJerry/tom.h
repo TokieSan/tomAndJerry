@@ -3,7 +3,7 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QKeyEvent>
-
+#include <bits/stdc++.h>
 
 class Tom: public QObject, public QGraphicsPixmapItem
 {
@@ -11,7 +11,10 @@ class Tom: public QObject, public QGraphicsPixmapItem
 private:
     int row1, column1;
     int data1[15][15];
+    std::vector<std::vector<int>> adj;
     int lastRand;
+    std::vector<int> road;
+    std::vector<int> dist;
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
     void setRow1(int newRow1);
@@ -22,6 +25,9 @@ public slots:
     void keyPressEvent(QKeyEvent * event);
     void move(char d);
     void randomlyMove();
+    void dij(int s);
+    void toJerry();
+    std::pair<int,int> getPos(int x);
 };
 
 #endif // TOM_H
