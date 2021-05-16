@@ -179,9 +179,7 @@ void Tom::toJerry(){
 
     while(jerPosition!=tompos){
         if(c>=225) {
-            a=jerpos;
             break;
-
         }
         c++;
         a =jerPosition;
