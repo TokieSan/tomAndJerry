@@ -172,10 +172,6 @@ void Tom::toJerry(){
     bool ch = false;
 
     while(jerPosition!=tompos){
-        if(road[jerPosition]==tompos){
-            a=jerPosition;
-            break;
-        }
         if(c>225) {
             ch = true;
             break;
