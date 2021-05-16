@@ -125,6 +125,8 @@ void Tom::move(char d)
         setPixmap(tom);
         lastMove=d;
     } else {
+        if(recursiveTracker>20) return;
+        recursiveTracker++;
         move(lastMove);
         // and here
     }
@@ -198,9 +200,5 @@ void Tom::toJerry(){
             move('l');
     else if(f.second>column1)
             move('r');
-    else {
-        // to be handled here
-       move(lastMove);
-    }
 
 }
