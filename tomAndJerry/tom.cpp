@@ -100,10 +100,12 @@ void Tom::move(char d)
 {
     if(d == 'u' && data1[row1-1][column1] != -1){
        row1--;
+       lastMove=d;
     }
 
     else if(d == 'd' && data1[row1+1][column1] != -1){
         row1++;
+        lastMove=d;
     }
 
     else if(d == 'r' && data1[row1][column1+1] != -1){
@@ -112,6 +114,7 @@ void Tom::move(char d)
         tom = tom.scaledToWidth(50);
         tom = tom.scaledToHeight(50);
         setPixmap(tom);
+        lastMove=d;
     }
 
     else if(d == 'l' && data1[row1][column1-1] != -1){
@@ -120,8 +123,9 @@ void Tom::move(char d)
         tom = tom.scaledToWidth(50);
         tom = tom.scaledToHeight(50);
         setPixmap(tom);
+        lastMove=d;
     } else {
-        randomlyMove();
+        move(lastMove);
         // and here
     }
 
@@ -175,7 +179,9 @@ void Tom::toJerry(){
 
     while(jerPosition!=tompos){
         if(c>=225) {
+            a=jerpos;
             break;
+
         }
         c++;
         a =jerPosition;
@@ -196,7 +202,7 @@ void Tom::toJerry(){
             move('r');
     else {
         // to be handled here
-       randomlyMove();
+       move(lastMove);
     }
 
 }

@@ -16,6 +16,7 @@ private:
     int lastRand;
     std::vector<int> road;
     std::vector<int> dist;
+    char lastMove;
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
     void setRow1(int newRow1);
