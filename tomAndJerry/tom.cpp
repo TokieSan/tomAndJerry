@@ -120,6 +120,9 @@ void Tom::move(char d)
         tom = tom.scaledToWidth(50);
         tom = tom.scaledToHeight(50);
         setPixmap(tom);
+    } else {
+        randomlyMove();
+        // and here
     }
 
     setPos(25+50*column1, 25+50*row1);
