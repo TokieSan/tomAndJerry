@@ -84,13 +84,6 @@ int main(int argc, char *argv[])
      QTimer tomTimer;
      tomTimer.start(350);
 
-     /*
-     QObject::connect(btn_start, SIGNAL(clicked()), whiteClock, SLOT(startClock()));
-     QObject::connect(signalMapper, SIGNAL(mapped(QWidget*)), whiteClock, SLOT(updateLED(QWidget*)));
-     QObject::connect(btn_start, SIGNAL(clicked()), signalMapper, SLOT(map()));
-     signalMapper->setMapping(btn_start, btn_ledWhite);
-     */
-
      tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(toJerry()));
 
     view.setScene(&scene);
