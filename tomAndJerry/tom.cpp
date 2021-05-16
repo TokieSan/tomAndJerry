@@ -135,6 +135,7 @@ void Tom::randomlyMove(){
     lastRand=idx;
 }
 void Tom::dij(int s){
+    dist.resize(225,1e9);
     dist[s]=0;
     road[s]=s;
     std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<std::pair<int,int>> > p;
@@ -151,7 +152,6 @@ void Tom::dij(int s){
             }
         }
     }
-
 }
 std::pair<int,int> Tom::getPos(int x){
     for(int i=0; i<15; i++){
@@ -159,7 +159,7 @@ std::pair<int,int> Tom::getPos(int x){
             if(data1[i][j]==x)
                 return {i,j};
     }
-    return{99,99};
+    return{-1,-1};
 }
 void Tom::toJerry(){
     // you should make this as input from the connect in main
@@ -180,10 +180,10 @@ void Tom::toJerry(){
         a =jerPosition;
         jerPosition=road[jerPosition];
     }
-   road.clear();
-    road.resize(225,0);
-    if(ch) return;
+
+    //if(ch) return;
     std::pair<int,int> f = getPos(a); // next step position
+    if(f.first==-1) return;
     if(f.first>row1){
         move('d');
     } else if(f.first<row1){
