@@ -17,6 +17,7 @@ private:
     std::vector<int> road;
     std::vector<int> dist;
     char lastMove;
+    int recursiveTracker=0;
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
     void setRow1(int newRow1);
