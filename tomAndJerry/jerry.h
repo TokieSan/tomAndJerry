@@ -7,7 +7,7 @@
 #include "cheese.h"
 #include <QGraphicsScene>
 #include "pellet.h"
-#include "tom.h"
+
 class jerry: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;

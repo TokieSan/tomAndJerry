@@ -11,7 +11,6 @@
 #include <QTimer>
 #include <QApplication>
 #include <QSignalMapper>
-
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
@@ -83,7 +82,7 @@ int main(int argc, char *argv[])
 
 
      QTimer tomTimer;
-     tomTimer.start(225);
+     tomTimer.start(350);
 
      /*
      QObject::connect(btn_start, SIGNAL(clicked()), whiteClock, SLOT(startClock()));

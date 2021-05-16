@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     cheese.cpp \
+    jerpos.cpp \
     jerry.cpp \
     main.cpp \
     pellet.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     cheese.h \
+    jerpos.h \
     jerry.h \
     pellet.h \
     tom.h

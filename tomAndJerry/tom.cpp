@@ -1,5 +1,4 @@
 #include "tom.h"
-
 bool validLimits(int x, int y, int nx, int ny) {
     if(
             x<0 ||
@@ -20,9 +19,12 @@ Tom::Tom(int initialRow, int initialColumn, int d[15][15])
     dist.resize(225,1e9);
     road.resize(225,-1);
 
+  //  std::vector<std::vector<bool>> vis(15,std::vector<bool>(15,0));
+
     for(int i=0; i<15; i++)
          for(int j = 0; j<15; j++){
              if(data1[i][j]==-1) continue;
+
             if(validLimits(i-1,j,15,15))
                 if(data1[i-1][j]!=-1){
                    adj[data1[i][j]].push_back(data1[i-1][j]);
@@ -135,7 +137,6 @@ void Tom::randomlyMove(){
 void Tom::dij(int s){
     dist[s]=0;
     road[s]=s;
-
     std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<std::pair<int,int>> > p;
     p.push({0,s});
     while(!p.empty()){
@@ -158,30 +159,42 @@ std::pair<int,int> Tom::getPos(int x){
             if(data1[i][j]==x)
                 return {i,j};
     }
-    return{-1,-1};
+    return{99,99};
 }
 void Tom::toJerry(){
-    int jerpos=55;
     // you should make this as input from the connect in main
     int tompos=data1[row1][column1];
+    //if(tompos==jerpos) return;
     dij(tompos);
-    if(tompos==jerpos) return;
-    std::vector<int> ans;
-    while(jerpos!=tompos){
-        ans.push_back(jerpos);
-        jerpos=road[jerpos];
+    int jerPosition=jerpos;
+    int a;
+    int c = 0;
+    bool ch = false;
+
+    while(jerPosition!=tompos){
+        if(road[jerPosition]==tompos){
+            a=jerPosition;
+            break;
+        }
+        if(c>225) {
+            ch = true;
+            break;
+        }
+        c++;
+        a =jerPosition;
+        jerPosition=road[jerPosition];
     }
-    reverse(ans.begin(), ans.end());
-    std::pair<int,int> f = getPos(ans[0]);
+   road.clear();
+    road.resize(225,0);
+    if(ch) return;
+    std::pair<int,int> f = getPos(a); // next step position
     if(f.first>row1){
         move('d');
     } else if(f.first<row1){
         move('u');
-    } else {
-        if(f.second<column1)
+    } else if(f.second<column1)
             move('l');
-        else
+    else
             move('r');
-    }
 
 }

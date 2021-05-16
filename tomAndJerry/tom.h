@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QKeyEvent>
 #include <bits/stdc++.h>
+#include "jerpos.h"
 
 class Tom: public QObject, public QGraphicsPixmapItem
 {

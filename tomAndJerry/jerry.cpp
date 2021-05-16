@@ -1,10 +1,13 @@
 #include "jerry.h"
+#include "tom.h"
+#include "jerpos.h"
 #include <QMessageBox>
 #include <QTimer>
 #include <QThread>
 #include <QEventLoop>
 #include <QApplication>
 #include <QProcess>
+#include "jerpos.h"
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
@@ -13,7 +16,6 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
             data4[i][j] = d[i][j];
     row4 = initialRow;
     column4 = initialColumn;
-
     QPixmap jer("Jerry3.png");
     jer = jer.scaledToWidth(50);
     jer = jer.scaledToHeight(50);
@@ -110,6 +112,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
     }
 
     setPos(25+50*column4, 25+50*row4);
+    jerpos=data4[row4][column4];
 
     QList<QGraphicsItem*> items = collidingItems();
 
@@ -200,5 +203,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
             }
         }
     }
+    jerpos=data4[row4][column4];
+
 }
 
