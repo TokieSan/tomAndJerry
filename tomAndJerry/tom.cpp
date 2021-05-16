@@ -169,11 +169,9 @@ void Tom::toJerry(){
     int jerPosition=jerpos;
     int a=-5;
     int c = 0;
-    bool ch = false;
 
     while(jerPosition!=tompos){
-        if(c>225) {
-            ch = true;
+        if(c>=225) {
             break;
         }
         c++;
@@ -191,7 +189,11 @@ void Tom::toJerry(){
         move('u');
     } else if(f.second<column1)
             move('l');
-    else
+    else if(f.second>column1)
             move('r');
+    else {
+        // to be handled here
+       randomlyMove();
+    }
 
 }
