@@ -164,10 +164,10 @@ std::pair<int,int> Tom::getPos(int x){
 void Tom::toJerry(){
     // you should make this as input from the connect in main
     int tompos=data1[row1][column1];
-    //if(tompos==jerpos) return;
+    if(tompos==jerpos) return;
     dij(tompos);
     int jerPosition=jerpos;
-    int a;
+    int a=-5;
     int c = 0;
     bool ch = false;
 
@@ -183,7 +183,8 @@ void Tom::toJerry(){
 
     //if(ch) return;
     std::pair<int,int> f = getPos(a); // next step position
-    if(f.first==-1) return;
+    if(f.first==-1) f=getPos(jerpos);
+    if(f.first==-1)  return;
     if(f.first>row1){
         move('d');
     } else if(f.first<row1){

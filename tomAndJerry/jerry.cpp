@@ -83,14 +83,19 @@ int jerry::getColumn4()
 }
 void jerry::keyPressEvent(QKeyEvent * event)
 {
-    if(event->key() == Qt::Key_Up && data4[row4-1][column4] != -1)
+    if(event->key() == Qt::Key_Up && data4[row4-1][column4] != -1){
         row4--;
-
-    else if(event->key() == Qt::Key_Down && data4[row4+1][column4] != -1)
+        jerpos=data4[row4][column4];
+    }
+    else if(event->key() == Qt::Key_Down && data4[row4+1][column4] != -1){
         row4++;
+        jerpos=data4[row4][column4];
 
+    }
     else if(event->key() == Qt::Key_Right && data4[row4][column4+1] != -1){
         column4++;
+        jerpos=data4[row4][column4];
+
         QPixmap jer("JerryRight.png");
         QPixmap jer2("JerryCheese.png");
        jer = jer.scaledToWidth(50);
@@ -102,6 +107,8 @@ void jerry::keyPressEvent(QKeyEvent * event)
 
     else if(event->key() == Qt::Key_Left && data4[row4][column4-1] != -1){
         column4--;
+        jerpos=data4[row4][column4];
+
         QPixmap jer("Jerry3.png");
         QPixmap jer2("JerryCheeseLeft.png");
         jer = jer.scaledToWidth(50);
@@ -112,7 +119,6 @@ void jerry::keyPressEvent(QKeyEvent * event)
     }
 
     setPos(25+50*column4, 25+50*row4);
-    jerpos=data4[row4][column4];
 
     QList<QGraphicsItem*> items = collidingItems();
 
