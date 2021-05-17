@@ -86,6 +86,7 @@ int main(int argc, char *argv[])
      tomTimer.start(350);
      tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(move()));
 
+
     view.setScene(&scene);
     view.show();
     return a.exec();

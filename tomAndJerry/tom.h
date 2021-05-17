@@ -26,7 +26,7 @@ public:
     int getColumn1();
     int rowJerry;
     int columnJerry;
-    int adjacencyMatrix[107][107] = {{0}};
+    int adjacencyMatrix[107][107];
     int matrix_row;
     int matrix_colum;
     QVector<int> dijkestra(int adjacencyMatrix[107][107], int startVertex);
