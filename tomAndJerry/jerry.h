@@ -34,7 +34,7 @@ public:
     void setItToFls(){invincible=false;}
     void updateLives();
     void updateScore();
-
+    void endGame();
 private slots:
     void keyPressEvent(QKeyEvent * event);
 

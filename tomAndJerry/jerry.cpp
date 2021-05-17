@@ -8,6 +8,9 @@
 #include <QApplication>
 #include <QProcess>
 #include "jerpos.h"
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QMediaContent>
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
@@ -81,8 +84,40 @@ int jerry::getColumn4()
 {
     return column4;
 }
+void jerry::endGame(){
+    if(lives<=0){
+        //popup window with "You Lost"
+        QMediaPlayer *music = new QMediaPlayer();
+        music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/lose.wav"));
+        music->setVolume(15);
+        music->play();
+        QMessageBox msg;
+        msg.setText("You have lost!");
+        QTimer cntDown;
+        int cnt=3;
+           QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
+                                if(--cnt < 0){
+                                    cntDown.stop();
+                                    msg.close();
+                                    lives=3;
+                                    this->updateLives();
+                                }
+                            });
+           cntDown.start(1000);
+           msg.exec();
+           qApp->quit();
+           QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+           //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
+    }
+}
 void jerry::keyPressEvent(QKeyEvent * event)
 {
+    if(tomEats>0){
+        lives--;
+        tomEats=0;
+        updateLives();
+        endGame();
+    }
     if(event->key() == Qt::Key_Up && data4[row4-1][column4] != -1){
         row4--;
         jerpos=data4[row4][column4];
@@ -139,6 +174,10 @@ void jerry::keyPressEvent(QKeyEvent * event)
         scene()->addItem(&cheeseR);
         doTheThing(this);
         if(score==4){
+            QMediaPlayer *music = new QMediaPlayer();
+            music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/win.wav"));
+            music->setVolume(15);
+            music->play();
             QMessageBox msg;
             msg.setText("You have won!");
             QTimer cntDown;
@@ -161,6 +200,10 @@ void jerry::keyPressEvent(QKeyEvent * event)
     {
         if(typeid(*items[i]) == typeid(cheese) && !hasCheese)
         {
+            QMediaPlayer *music = new QMediaPlayer();
+            music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/eat.wav"));
+            music->setVolume(15);
+            music->play();
             scene()->removeItem(items[i]);
             QPixmap jerr("JerryCheese.png");
             jerr = jerr.scaledToWidth(50);
@@ -174,6 +217,10 @@ void jerry::keyPressEvent(QKeyEvent * event)
         }
         else if(typeid(*items[i]) == typeid(pellet))
         {
+            QMediaPlayer *music = new QMediaPlayer();
+            music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/pellet.wav"));
+            music->setVolume(15);
+            music->play();
             scene()->removeItem(items[i]);
             //invincible
             //maybe add sth in the future to make jerry bigger when invincible
@@ -187,26 +234,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
         else if(typeid(*items[i]) == typeid(Tom)){
             if(!invincible) lives--;
             updateLives();
-            if(lives<=0){
-                //popup window with "You Lost"
-                QMessageBox msg;
-                msg.setText("You have lost!");
-                QTimer cntDown;
-                int cnt=3;
-                   QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
-                                        if(--cnt < 0){
-                                            cntDown.stop();
-                                            msg.close();
-                                            lives=3;
-                                            this->updateLives();
-                                        }
-                                    });
-                   cntDown.start(1000);
-                   msg.exec();
-                   qApp->quit();
-                   QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-                   //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
-            }
+            endGame();
         }
     }
     jerpos=data4[row4][column4];

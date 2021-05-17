@@ -11,6 +11,10 @@
 #include <QTimer>
 #include <QApplication>
 #include <QSignalMapper>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QMediaContent>
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
@@ -85,6 +89,13 @@ int main(int argc, char *argv[])
      tomTimer.start(350);
 
      tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(toJerry()));
+
+     QMediaPlayer *music = new QMediaPlayer();
+     music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/backgroundmusic.mp3"));
+     music->setVolume(15);
+     music->play();
+     music->connect(music,&QMediaPlayer::mediaStatusChanged,music,&QMediaPlayer::play);
+     music->play();
 
     view.setScene(&scene);
     view.show();

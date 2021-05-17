@@ -1,4 +1,6 @@
 #include "tom.h"
+#include "jerry.h"
+
 bool validLimits(int x, int y, int nx, int ny) {
     if(
             x<0 ||
@@ -86,15 +88,15 @@ void Tom::keyPressEvent(QKeyEvent * event)
     else if(event->key() == Qt::Key_Left)
        move('l');
 
-    /*QList<QGraphicsItem*> items = collidingItems();
+    QList<QGraphicsItem*> items = collidingItems();
 
     for(int i = 0; i<items.size(); i++)
     {
         if(typeid(*items[i]) == typeid(jerry)){
-
+            tomEats++;
         }
 
-    }*/
+    }
 }
 void Tom::move(char d)
 {
@@ -125,7 +127,7 @@ void Tom::move(char d)
         setPixmap(tom);
         lastMove=d;
     } else {
-        if(recursiveTracker>20) return;
+        if(recursiveTracker>50) return;
         recursiveTracker++;
         move(lastMove);
         // and here
