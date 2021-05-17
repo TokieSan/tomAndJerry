@@ -20,7 +20,6 @@ private:
 
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
-    QTimer* timer;
     void setRow1(int newRow1);
     int getRow1();
     void setColumn1(int newColumn1);
