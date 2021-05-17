@@ -79,102 +79,91 @@ int Tom::getColumn1()
 
 QVector<int> Tom::dijkestra(int adjacencyMatrix[107][107], int startVertex)
 {
-    int temp[COUNT][COUNT], costs[COUNT], previous[COUNT];
-        bool visited[COUNT];
-        // temp
-        for (int i = 0; i < COUNT; i++)
-            for (int j = 0; j < COUNT; j++)
-                if (adjacencyMatrix[i][j] == 0)
-                    temp[i][j] = INFINITE;
-                else
-                    temp[i][j] = adjacencyMatrix[i][j];
-        // costs, previous, and visited
-        for (int i = 0; i < COUNT; i++)
+    int temp[COUNT][COUNT];
+    for (int i = 0; i < COUNT; i++)
+    {
+        for (int j = 0; j < COUNT; j++)
         {
-            costs[i] = temp[startVertex][i];
+            if (adjacencyMatrix[i][j] == 0)
+                temp[i][j] = INFINITE;
+            else
+                temp[i][j] = adjacencyMatrix[i][j];
+        }
+    }
+    bool visited[COUNT];
+    int previous[COUNT];
+    float cost[COUNT];
+    // 1st Row:
+    for (int i = 0; i < COUNT; i++)
+    {
+        if (i == startVertex)
+        {
+            previous[i] = -1;
+            cost[i] = 0;
+            visited[i] = true;
+        }
+        else
+        {
             previous[i] = startVertex;
+            cost[i] = temp[startVertex][i];
             visited[i] = false;
         }
-        // startNode
-        costs[startVertex] = 0;
-        visited[startVertex] = true;
-
-        int count = 1, nextNode, minimumCost;
-        while (count < COUNT)
-        {
-            // Find the minimum cost in order to visit a node.
-            minimumCost = INFINITE;
-            for (int i = 0; i < COUNT; i++)
-                if ((costs[i] < minimumCost) && (visited[i] == false))
-                {
-                    minimumCost = costs[i];
-                    nextNode = i;
-                }
-            // Visit the node.
-            visited[nextNode] = true;
-            // Update the costs of the children of the visited node.
-            for (int i = 0; i < COUNT; i++)
-                if ((minimumCost + temp[nextNode][i] < costs[i]) && (visited[i] == false))
-                {
-                    costs[i] = minimumCost + temp[nextNode][i];
-                    previous[i] = nextNode;
-                }
-            count++;
-        }
-        // Fill the paths.
-        int j;
-        QVector<QVector<int>> paths;
-        paths.resize(COUNT);
+    }
+    // All Rows:
+    int count = 1;
+    while (count < COUNT)
+    {
+        // Determine which vertex to visit.
+        int minimum = INFINITE, visitedVertex;
         for (int i = 0; i < COUNT; i++)
         {
-            paths[i].push_back(i);
-            if (i != startVertex)
+            if (visited[i] == false && cost[i] < minimum)
             {
-                j = i;
-                do
-                {
-                    j = previous[j];
-                    paths[i].push_back(j);
-                } while (j != startVertex);
+                minimum = cost[i];
+                visitedVertex = i;
             }
         }
-        return paths[jerry::getVertex()];
+        // Visit the vertex.
+        visited[visitedVertex] = true;
+
+        // Check whether there are shorter paths.
+        for (int i = 0; i < COUNT; i++)
+        {
+            if (visited[i] == false)
+            {
+                if ((cost[visitedVertex] + temp[visitedVertex][i]) < cost[i])
+                {
+                    previous[i] = visitedVertex;
+                    cost[i] = (cost[visitedVertex] + temp[visitedVertex][i]);
+                }
+            }
+        }
+        count++;
+    }
+    // Extract the paths.
+    QVector<QVector<int>> paths;
+    paths.resize(COUNT);
+    int j;
+    for (int i = 0; i < COUNT; i++)
+    {
+        paths[i].push_back(i);
+        if (i != startVertex)
+        {
+            j = i;
+            do
+            {
+                j = previous[j];
+                paths[i].insert(paths[i].begin(), j);
+            } while (j != startVertex);
+        }
+    }
+    return paths[jerry::getVertex()];
 }
 
 void Tom::move()
 {
-
    startVertex = data1[getRow1()][getColumn1()];
-   path = dijkestra(adjacencyMatrix, startVertex);
-
-   if(data1[row1-1][column1] != -1)
-       row1--;
-
-   else if(data1[row1+1][column1] != -1)
-       row1++;
-
-   else if(data1[row1][column1+1] != -1){
-       column1++;
-
-       QPixmap t1("TomRight.png");
-       t1 = t1.scaledToWidth(50);
-       t1 = t1.scaledToHeight(50);
-       setPixmap(t1);
-
-   }
-
-   else if(data1[row1][column1-1] != -1){
-       column1--;
-       QPixmap t2("Tom.png");
-
-       t2 = t2.scaledToWidth(50);
-       t2 = t2.scaledToHeight(50);
-       setPixmap(t2);
-   }
-
+   column1++;
    setPos(25+50*column1, 25+50*row1);
-
 }
-
-// function for dijkstra
 
