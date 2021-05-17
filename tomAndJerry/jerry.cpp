@@ -154,6 +154,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
     }
 
     setPos(25+50*column4, 25+50*row4);
+    jerpos=data4[row4][column4];
 
     QList<QGraphicsItem*> items = collidingItems();
 

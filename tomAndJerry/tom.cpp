@@ -22,13 +22,12 @@ Tom::Tom(int initialRow, int initialColumn, int d[15][15])
     road.resize(225,-1);
 
   //  std::vector<std::vector<bool>> vis(15,std::vector<bool>(15,0));
-
     for(int i=0; i<15; i++)
          for(int j = 0; j<15; j++){
              if(data1[i][j]==-1) continue;
 
             if(validLimits(i-1,j,15,15))
-                if(data1[i-1][j]!=-1){
+                if(data1[i-1][j]!=-1){                  
                    adj[data1[i][j]].push_back(data1[i-1][j]);
                    adj[data1[i-1][j]].push_back(data1[i][j]);
                 }
@@ -127,7 +126,10 @@ void Tom::move(char d)
         setPixmap(tom);
         lastMove=d;
     } else {
-        if(recursiveTracker>50) return;
+        if(recursiveTracker>500) {
+            randomlyMove();
+            return;
+        }
         recursiveTracker++;
         move(lastMove);
         // and here
@@ -147,6 +149,7 @@ void Tom::randomlyMove(){
 }
 void Tom::dij(int s){
     dist.resize(225,1e9);
+    road.resize(225,-1);
     dist[s]=0;
     road[s]=s;
     std::priority_queue<std::pair<int,int>, std::vector<std::pair<int,int>>, std::greater<std::pair<int,int>> > p;
@@ -178,13 +181,11 @@ void Tom::toJerry(){
     if(tompos==jerpos) return;
     dij(tompos);
     int jerPosition=jerpos;
-    int a=-5;
+    int a=jerPosition;
     int c = 0;
 
     while(jerPosition!=tompos){
-        if(c>=225) {
-            break;
-        }
+        if(c>=500) {  break;        }
         c++;
         a =jerPosition;
         jerPosition=road[jerPosition];
