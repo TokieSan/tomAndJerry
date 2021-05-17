@@ -7,7 +7,9 @@
 #include "cheese.h"
 #include <QGraphicsScene>
 #include "pellet.h"
-
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QMediaContent>
 class jerry: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;
@@ -24,8 +26,7 @@ public:
     static int data4[15][15];
 
     int score;
-
-
+    void endGame();
     jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene);
     bool checkIfWon();
     void setRow4(int newRow4);

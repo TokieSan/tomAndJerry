@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Tom_t {
-    QByteArrayData data[14];
-    char stringdata0[98];
+    QByteArrayData data[3];
+    char stringdata0[10];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,24 +33,11 @@ struct qt_meta_stringdata_Tom_t {
 static const qt_meta_stringdata_Tom_t qt_meta_stringdata_Tom = {
     {
 QT_MOC_LITERAL(0, 0, 3), // "Tom"
-QT_MOC_LITERAL(1, 4, 13), // "keyPressEvent"
-QT_MOC_LITERAL(2, 18, 0), // ""
-QT_MOC_LITERAL(3, 19, 10), // "QKeyEvent*"
-QT_MOC_LITERAL(4, 30, 5), // "event"
-QT_MOC_LITERAL(5, 36, 4), // "move"
-QT_MOC_LITERAL(6, 41, 1), // "d"
-QT_MOC_LITERAL(7, 43, 12), // "randomlyMove"
-QT_MOC_LITERAL(8, 56, 3), // "dij"
-QT_MOC_LITERAL(9, 60, 1), // "s"
-QT_MOC_LITERAL(10, 62, 7), // "toJerry"
-QT_MOC_LITERAL(11, 70, 6), // "getPos"
-QT_MOC_LITERAL(12, 77, 18), // "std::pair<int,int>"
-QT_MOC_LITERAL(13, 96, 1) // "x"
+QT_MOC_LITERAL(1, 4, 4), // "move"
+QT_MOC_LITERAL(2, 9, 0) // ""
 
     },
-    "Tom\0keyPressEvent\0\0QKeyEvent*\0event\0"
-    "move\0d\0randomlyMove\0dij\0s\0toJerry\0"
-    "getPos\0std::pair<int,int>\0x"
+    "Tom\0move\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +47,7 @@ static const uint qt_meta_data_Tom[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,20 +55,10 @@ static const uint qt_meta_data_Tom[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x0a /* Public */,
-       5,    1,   47,    2, 0x0a /* Public */,
-       7,    0,   50,    2, 0x0a /* Public */,
-       8,    1,   51,    2, 0x0a /* Public */,
-      10,    0,   54,    2, 0x0a /* Public */,
-      11,    1,   55,    2, 0x0a /* Public */,
+       1,    0,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
-    QMetaType::Void, QMetaType::Char,    6,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    9,
-    QMetaType::Void,
-    0x80000000 | 12, QMetaType::Int,   13,
 
        0        // eod
 };
@@ -92,16 +69,11 @@ void Tom::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         auto *_t = static_cast<Tom *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->keyPressEvent((*reinterpret_cast< QKeyEvent*(*)>(_a[1]))); break;
-        case 1: _t->move((*reinterpret_cast< char(*)>(_a[1]))); break;
-        case 2: _t->randomlyMove(); break;
-        case 3: _t->dij((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->toJerry(); break;
-        case 5: { std::pair<int,int> _r = _t->getPos((*reinterpret_cast< int(*)>(_a[1])));
-            if (_a[0]) *reinterpret_cast< std::pair<int,int>*>(_a[0]) = std::move(_r); }  break;
+        case 0: _t->move(); break;
         default: ;
         }
     }
+    (void)_a;
 }
 
 QT_INIT_METAOBJECT const QMetaObject Tom::staticMetaObject = { {
@@ -135,13 +107,13 @@ int Tom::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 1)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 1;
     }
     return _id;
 }
