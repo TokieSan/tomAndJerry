@@ -30,6 +30,8 @@ int main(int argc, char *argv[])
 
 
 
+
+
     for(int i = 0; i<15; i++)
         for(int j = 0; j<15; j++)
         {
@@ -78,13 +80,11 @@ int main(int argc, char *argv[])
      pellet p1(11,11);
      scene.addItem(&p1);
      pellet p2(3,1);
-     scene.addItem(&p2);
-
+     scene.addItem(&p2);;
 
      QTimer tomTimer;
      tomTimer.start(350);
-
-     tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(toJerry()));
+     tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(move()));
 
     view.setScene(&scene);
     view.show();
