@@ -32,8 +32,12 @@ public:
     QVector<int> dijkestra(int adjacencyMatrix[107][107], int startVertex);
     int startVertex;
     int endVertex;
+    char lastMove;
     QVector<int> path;
+    std::pair<int,int> getPos(int x);
+    void move(char d, int recursionTracker);
     const int COUNT = 107;
+
     const int INFINITE =  1000;
 public slots:
     void move();

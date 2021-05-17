@@ -11,13 +11,17 @@
 #include <QTimer>
 #include <QApplication>
 #include <QSignalMapper>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+#include <QMediaContent>
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
     QApplication a(argc, argv);
     QGraphicsScene scene;
     QGraphicsView view;
-
+    a .setFont (QFont ("Hack", 9));
     view.setWindowTitle("Tom and Jerry");
     view.setFixedSize(1200,800);
     view.setBackgroundBrush(QBrush(QColor("#111111")));
@@ -27,9 +31,6 @@ int main(int argc, char *argv[])
     file.open(QIODevice::ReadOnly);
     QTextStream stream(&file);
     QString temp;
-
-
-
 
 
     for(int i = 0; i<15; i++)
@@ -85,6 +86,13 @@ int main(int argc, char *argv[])
      QTimer tomTimer;
      tomTimer.start(350);
      tomTimer.connect(&tomTimer, SIGNAL(timeout()),&t, SLOT(move()));
+
+     QMediaPlayer *music = new QMediaPlayer();
+     music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/backgroundmusic.mp3"));
+     music->setVolume(15);
+     music->play();
+     music->connect(music,&QMediaPlayer::mediaStatusChanged,music,&QMediaPlayer::play);
+     music->play();
 
 
     view.setScene(&scene);

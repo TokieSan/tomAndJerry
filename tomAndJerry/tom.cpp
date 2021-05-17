@@ -79,11 +79,13 @@ int Tom::getColumn1()
 
 QVector<int> Tom::dijkestra(int adjacencyMatrix[107][107], int startVertex)
 {
+
     int temp[COUNT][COUNT];
     for (int i = 0; i < COUNT; i++)
     {
         for (int j = 0; j < COUNT; j++)
         {
+            if(!validLimits(i,j,107,107)) continue;
             if (adjacencyMatrix[i][j] == 0)
                 temp[i][j] = INFINITE;
             else
@@ -152,6 +154,7 @@ QVector<int> Tom::dijkestra(int adjacencyMatrix[107][107], int startVertex)
             j = i;
             do
             {
+                if(!validLimits(i,j,107,107)) continue;
                 j = previous[j];
                 paths[i].insert(paths[i].begin(), j);
             } while (j != startVertex);
@@ -159,11 +162,67 @@ QVector<int> Tom::dijkestra(int adjacencyMatrix[107][107], int startVertex)
     }
     return paths[jerry::getVertex()];
 }
+std::pair<int,int> Tom::getPos(int x){
+    for(int i=0; i<15; i++){
+        for(int j=0; j<15; j++)
+            if(data1[i][j]==x)
+                return {i,j};
+    }
+    return{-1,-1};
+}
 
+void Tom::move(char d, int recursionTracker)
+{
+    if(d == 'u' && data1[row1-1][column1] != -1){
+       row1--;
+    }
+
+    else if(d == 'd' && data1[row1+1][column1] != -1){
+        row1++;
+        lastMove=d;
+    }
+
+    else if(d == 'r' && data1[row1][column1+1] != -1){
+        column1++;
+        QPixmap tom("TomRight.png");
+        tom = tom.scaledToWidth(50);
+        tom = tom.scaledToHeight(50);
+        setPixmap(tom);
+        lastMove=d;
+    }
+
+    else if(d == 'l' && data1[row1][column1-1] != -1){
+        column1--;
+        QPixmap tom("Tom.png");
+        tom = tom.scaledToWidth(50);
+        tom = tom.scaledToHeight(50);
+        setPixmap(tom);
+        lastMove=d;
+    } else {
+        if(recursionTracker>225) {
+            return;
+        }
+        move(lastMove, recursionTracker+1);
+        // and here
+    }
+
+    setPos(25+50*column1, 25+50*row1);
+}
 void Tom::move()
 {
    startVertex = data1[getRow1()][getColumn1()];
-   column1++;
-   setPos(25+50*column1, 25+50*row1);
+   path = dijkestra(adjacencyMatrix, startVertex);
+   if(path.size()<=1) return;
+   std::pair<int,int> f = getPos(   path[1]); // next step position
+   if(f.first==-1) f=getPos(jerpos);
+   if(f.first==-1)  return;
+   if(f.first>row1){
+       move('d',0);
+   } else if(f.first<row1){
+       move('u',0);
+   } else if(f.second<column1)
+           move('l',0);
+   else if(f.second>column1)
+           move('r',0);
 }
 
