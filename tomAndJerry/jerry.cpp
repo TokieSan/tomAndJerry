@@ -9,18 +9,26 @@
 #include <QProcess>
 #include "jerpos.h"
 
+int jerry::row4 = 7;
+int jerry::column4 = 7;
+int jerry::data4[15][15] = {{0}};
+
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
     for(int i = 0; i<15; i++)
         for(int j = 0; j<15; j++)
+        {
             data4[i][j] = d[i][j];
+        }
+
     row4 = initialRow;
     column4 = initialColumn;
+
     QPixmap jer("Jerry3.png");
     jer = jer.scaledToWidth(50);
     jer = jer.scaledToHeight(50);
     setPixmap(jer);
-    setPos(25+50*column4, 25+50*row4);
+    setPos(25+50*jerry::column4, 25+50*jerry::row4);
     score=0;
     lives=3;
     hasCheese=false;
@@ -212,4 +220,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
     jerpos=data4[row4][column4];
 
 }
-
+int jerry::getVertex()
+{
+    return data4[row4][column4];
+}

@@ -3,8 +3,12 @@
 #include <QGraphicsPixmapItem>
 #include <QObject>
 #include <QKeyEvent>
-#include <bits/stdc++.h>
+#include <QVector>
+#include <queue>
 #include "jerpos.h"
+#include "jerry.h"
+#include <QTimer>
+#include <QKeyEvent>
 
 class Tom: public QObject, public QGraphicsPixmapItem
 {
@@ -12,25 +16,28 @@ class Tom: public QObject, public QGraphicsPixmapItem
 private:
     int row1, column1;
     int data1[15][15];
-    std::vector<std::vector<int>> adj;
     int lastRand;
-    std::vector<int> road;
-    std::vector<int> dist;
-    char lastMove;
-    int recursiveTracker=0;
+
 public:
     Tom(int initialRow, int initialColumn, int d[15][15]);
+    QTimer* timer;
     void setRow1(int newRow1);
     int getRow1();
     void setColumn1(int newColumn1);
     int getColumn1();
+    int rowJerry;
+    int columnJerry;
+    int adjacencyMatrix[107][107] = {{0}};
+    int matrix_row;
+    int matrix_colum;
+    QVector<int> dijkestra(int adjacencyMatrix[107][107], int startVertex);
+    int startVertex;
+    int endVertex;
+    QVector<int> path;
+    const int COUNT = 107;
+    const int INFINITE =  1000;
 public slots:
-    void keyPressEvent(QKeyEvent * event);
-    void move(char d);
-    void randomlyMove();
-    void dij(int s);
-    void toJerry();
-    std::pair<int,int> getPos(int x);
+    void move();
 };
 
 #endif // TOM_H

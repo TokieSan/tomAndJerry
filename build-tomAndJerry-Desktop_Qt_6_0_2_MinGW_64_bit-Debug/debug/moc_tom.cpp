@@ -22,23 +22,19 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Tom_t {
-    const uint offsetsAndSize[12];
-    char stringdata0[41];
+    const uint offsetsAndSize[6];
+    char stringdata0[10];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_Tom_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_Tom_t qt_meta_stringdata_Tom = {
     {
 QT_MOC_LITERAL(0, 3), // "Tom"
-QT_MOC_LITERAL(4, 13), // "keyPressEvent"
-QT_MOC_LITERAL(18, 0), // ""
-QT_MOC_LITERAL(19, 10), // "QKeyEvent*"
-QT_MOC_LITERAL(30, 5), // "event"
-QT_MOC_LITERAL(36, 4) // "move"
+QT_MOC_LITERAL(4, 4), // "move"
+QT_MOC_LITERAL(9, 0) // ""
 
     },
-    "Tom\0keyPressEvent\0\0QKeyEvent*\0event\0"
-    "move"
+    "Tom\0move\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -48,7 +44,7 @@ static const uint qt_meta_data_Tom[] = {
        9,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -56,11 +52,9 @@ static const uint qt_meta_data_Tom[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   26,    2, 0x0a,    0 /* Public */,
-       5,    0,   29,    2, 0x0a,    2 /* Public */,
+       1,    0,   20,    2, 0x0a,    0 /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3,    4,
     QMetaType::Void,
 
        0        // eod
@@ -72,11 +66,11 @@ void Tom::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **
         auto *_t = static_cast<Tom *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->keyPressEvent((*reinterpret_cast< QKeyEvent*(*)>(_a[1]))); break;
-        case 1: _t->move(); break;
+        case 0: _t->move(); break;
         default: ;
         }
     }
+    (void)_a;
 }
 
 const QMetaObject Tom::staticMetaObject = { {
@@ -87,7 +81,7 @@ const QMetaObject Tom::staticMetaObject = { {
     nullptr,
 qt_incomplete_metaTypeArray<qt_meta_stringdata_Tom_t
 
-, QtPrivate::TypeAndForceComplete<void, std::false_type>, QtPrivate::TypeAndForceComplete<QKeyEvent *, std::false_type>, QtPrivate::TypeAndForceComplete<void, std::false_type>
+, QtPrivate::TypeAndForceComplete<void, std::false_type>
 
 
 >,
@@ -116,13 +110,13 @@ int Tom::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 1;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 1)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
+        _id -= 1;
     }
     return _id;
 }

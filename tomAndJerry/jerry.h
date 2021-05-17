@@ -12,20 +12,25 @@ class jerry: public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT;
 private:
-    int row4, column4, lives;
-    int data4[15][15];
+    int lives;
     bool hasCheese, invincible;
     QGraphicsTextItem x;
     QGraphicsTextItem y;
     QGraphicsPixmapItem cheeseR;
 
-
 public:
+    static int row4;
+    static int column4;
+    static int data4[15][15];
+
     int score;
+
+
     jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene);
     bool checkIfWon();
     void setRow4(int newRow4);
     int getRow4();
+    static int getVertex();
     void setColumn4(int newColumn4);
     int getColumn4();
     int getScore(){return score;}
