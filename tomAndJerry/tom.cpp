@@ -24,41 +24,39 @@ Tom::Tom(int initialRow, int initialColumn, int d[15][15])
     setPos(25+50*column1, 25+50*row1);
 
 
+    for(int i = 0; i<107; i++)
+        for(int j = 0; j<107; j++)
+            adjacencyMatrix[i][j] = 0;
 
-    QVector<QVector<int>> adj(107);
 
-        int k = 0;
-        for(int i=0; i<15; i++)
-         {
-             for(int j = 0; j<15; j++)
-             {
-                 if(data1[i][j]!=-1)
-                 {
+    int k;
 
+    for(int i=0; i<15; i++)
+    {
+        for(int j = 0; j<15; j++)
+        {
+            if(data1[i][j]!=-1)
+            {
+                k = data1[i][j];
                 if(validLimits(i-1,j,15,15))
                     if(data1[i-1][j]!=-1)
-                       adj[k].push_back(data1[i-1][j]);
+                       adjacencyMatrix[k][data1[i-1][j]] = 1;
 
                 if(validLimits(i+1,j,15,15))
                     if(data1[i+1][j]!=-1)
-                       adj[k].push_back(data1[i+1][j]);
+                       adjacencyMatrix[k][data1[i+1][j]] = 1;
 
                 if(validLimits(i,j-1,15,15))
                     if(data1[i][j-1]!=-1)
-                       adj[k].push_back(data1[i][j-1]);
+                       adjacencyMatrix[k][data1[i][j-1]] = 1;
 
                 if(validLimits(i,j+1,15,15))
                     if(data1[i][j+1]!=-1)
-                       adj[k].push_back(data1[i][j+1]);
-                k++;
+                        adjacencyMatrix[k][data1[i][j+1]] = 1;
+
                  }
             }
          }
-
-         for(int i = 0; i<107; i++)
-            for(int k = 0; k<adj[i].size(); k++)
-                adjacencyMatrix[i][adj[i][k]] = 1;
-
 
     lastRand=0;
 }
@@ -145,37 +143,38 @@ QVector<int> Tom::dijkestra(int adjacencyMatrix[107][107], int startVertex)
 
 void Tom::move()
 {
+
    startVertex = data1[getRow1()][getColumn1()];
    path = dijkestra(adjacencyMatrix, startVertex);
 
+   if(data1[row1-1][column1] != -1)
+       row1--;
 
-if(data1[row1][column1+1] == path.size()- 2 )
-{
-    column1++;
-    setPos(25 + 50 * column1, 25 + 50 * row1);
+   else if(data1[row1+1][column1] != -1)
+       row1++;
+
+   else if(data1[row1][column1+1] != -1){
+       column1++;
+
+       QPixmap t1("TomRight.png");
+       t1 = t1.scaledToWidth(50);
+       t1 = t1.scaledToHeight(50);
+       setPixmap(t1);
+
+   }
+
+   else if(data1[row1][column1-1] != -1){
+       column1--;
+       QPixmap t2("Tom.png");
+
+       t2 = t2.scaledToWidth(50);
+       t2 = t2.scaledToHeight(50);
+       setPixmap(t2);
+   }
+
+   setPos(25+50*column1, 25+50*row1);
 
 }
-//else if((m==0 || m== 1|| m==2 || m==4) && data[row++][column]> -1 && row <16)
-else if(data1[row1+1][column1]== path.size()- 2)
-{
-    row1++;
-    setPos(25 + 50 * column1, 25 + 50 * row1);
 
-}
-//else if((m==0 || m== 1|| m==2 || m==4) &&data[row][column--]>-1 && column > 0)
-else if(data1[row1][column1-1]== path.size()- 2)
-{column1--;
-
-     setPos(25 + 50 * column1, 25 + 50 * row1);
-
-}
-//else if((m==0 || m== 1|| m==2 || m==4) && data[row--][column]> -1 && row > 0)
-else if (data1[row1-1][column1]== path.size()- 2)
-{
-    row1--;
-    setPos(25 + 50 * column1, 25 + 50 * row1);
-}
-}
 // function for dijkstra
-
 

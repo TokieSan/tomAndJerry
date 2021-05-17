@@ -381,7 +381,20 @@ release/moc_tom.cpp: ../tomAndJerry/tom.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/QSizeF \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/QTransform \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/qkeysequence.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QVector \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qvector.h \
 		../tomAndJerry/jerpos.h \
+		../tomAndJerry/jerry.h \
+		../tomAndJerry/cheese.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/qgraphicsscene.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qbrush.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qfont.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qpen.h \
+		../tomAndJerry/pellet.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QTimer \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qtimer.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qbasictimer.h \
 		release/moc_predefs.h \
 		C:/Qt/6.0.2/mingw81_64/bin/moc.exe
 	C:\Qt\6.0.2\mingw81_64\bin\moc.exe $(DEFINES) --include D:/tomAndJerry/build-tomAndJerry-Desktop_Qt_6_0_2_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.0.2/mingw81_64/mkspecs/win32-g++ -ID:/tomAndJerry/tomAndJerry -IC:/Qt/6.0.2/mingw81_64/include -IC:/Qt/6.0.2/mingw81_64/include/QtWidgets -IC:/Qt/6.0.2/mingw81_64/include/QtGui -IC:/Qt/6.0.2/mingw81_64/include/QtCore -I. -I/usr/include/c++/10.2.0 -I/usr/include/c++/10.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/10.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/include-fixed -I/usr/include ..\tomAndJerry\tom.h -o release\moc_tom.cpp
@@ -643,7 +656,12 @@ release/jerry.o: ../tomAndJerry/jerry.cpp ../tomAndJerry/jerry.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/qpen.h \
 		../tomAndJerry/pellet.h \
 		../tomAndJerry/tom.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QVector \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qvector.h \
 		../tomAndJerry/jerpos.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QTimer \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qtimer.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qbasictimer.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/QMessageBox \
 		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/qmessagebox.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/qdialog.h \
@@ -654,9 +672,6 @@ release/jerry.o: ../tomAndJerry/jerry.cpp ../tomAndJerry/jerry.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/qsizepolicy.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/qcursor.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/qbitmap.h \
-		C:/Qt/6.0.2/mingw81_64/include/QtCore/QTimer \
-		C:/Qt/6.0.2/mingw81_64/include/QtCore/qtimer.h \
-		C:/Qt/6.0.2/mingw81_64/include/QtCore/qbasictimer.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/QThread \
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/qthread.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/qdeadlinetimer.h \
@@ -825,6 +840,8 @@ release/main.o: ../tomAndJerry/main.cpp C:/Qt/6.0.2/mingw81_64/include/QtWidgets
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/QTextStream \
 		../tomAndJerry/tom.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/QKeyEvent \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QVector \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qvector.h \
 		../tomAndJerry/jerpos.h \
 		../tomAndJerry/jerry.h \
 		../tomAndJerry/cheese.h \
@@ -1064,7 +1081,20 @@ release/tom.o: ../tomAndJerry/tom.cpp ../tomAndJerry/tom.h \
 		C:/Qt/6.0.2/mingw81_64/include/QtCore/QSizeF \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/QTransform \
 		C:/Qt/6.0.2/mingw81_64/include/QtGui/qkeysequence.h \
-		../tomAndJerry/jerpos.h
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QVector \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qvector.h \
+		../tomAndJerry/jerpos.h \
+		../tomAndJerry/jerry.h \
+		../tomAndJerry/cheese.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/QGraphicsScene \
+		C:/Qt/6.0.2/mingw81_64/include/QtWidgets/qgraphicsscene.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qbrush.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qfont.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtGui/qpen.h \
+		../tomAndJerry/pellet.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/QTimer \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qtimer.h \
+		C:/Qt/6.0.2/mingw81_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\tom.o ..\tomAndJerry\tom.cpp
 
 release/moc_jerry.o: release/moc_jerry.cpp 
