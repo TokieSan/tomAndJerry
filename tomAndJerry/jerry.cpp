@@ -15,8 +15,8 @@ int jerry::data4[15][15] = {{0}};
 
 jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &scene)
 {
-    for(int i = 0; i<15; i++)
-        for(int j = 0; j<15; j++)
+    for(int i = 0; i < 15; i++)
+        for(int j = 0; j < 15; j++)
         {
             data4[i][j] = d[i][j];
         }
@@ -24,16 +24,16 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
     row4 = initialRow;
     column4 = initialColumn;
 
-    QPixmap jer("Jerry3.png");
+    QPixmap jer("../media/art/Jerry3.png");
     jer = jer.scaledToWidth(50);
     jer = jer.scaledToHeight(50);
     setPixmap(jer);
-    setPos(25+50*jerry::column4, 25+50*jerry::row4);
-    score=0;
-    lives=3;
-    hasCheese=false;
-    invincible=false;
-    std::string scoreText="Cheese: ";
+    setPos(25 + 50 * jerry::column4, 25 + 50 * jerry::row4);
+    score = 0;
+    lives = 3;
+    hasCheese = false;
+    invincible = false;
+    std::string scoreText = "Cheese: ";
     scoreText.append( std::to_string(this->getScore()));
     x.setPlainText(QString::fromUtf8(scoreText.c_str()));
     x.setDefaultTextColor(QColor("#24d1ac"));
@@ -41,7 +41,7 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
     x.setScale(2);
     scene.addItem(&x);
     scene.addItem(&cheeseR);
-    scoreText="Lives: ";
+    scoreText = "Lives: ";
     scoreText.append( std::to_string(lives));
     y.setPlainText(QString::fromUtf8(scoreText.c_str()));
     y.setDefaultTextColor(QColor("#24d1ac"));
@@ -51,11 +51,11 @@ jerry::jerry(int initialRow, int initialColumn, int d[15][15], QGraphicsScene &s
     scene.addItem(&y);
 
 }
-bool jerry::checkIfWon(){
-    return score==4;
+bool jerry::checkIfWon() {
+    return score == 4;
 }
-void jerry::doTheThing(jerry *jer){
-    std::string scoreText="Cheese: ";
+void jerry::doTheThing(jerry *jer) {
+    std::string scoreText = "Cheese: ";
     scoreText.append( std::to_string(jer->getScore()));
     x.setPlainText(QString::fromUtf8(scoreText.c_str()));
     x.setDefaultTextColor(QColor("#24d1ac"));
@@ -67,8 +67,8 @@ void jerry::setRow4(int newRow4)
 {
     row4 = newRow4;
 }
-void jerry::updateLives(){
-    std::string scoreText="Lives: ";
+void jerry::updateLives() {
+    std::string scoreText = "Lives: ";
     scoreText.append( std::to_string(lives));
     y.setPlainText(QString::fromUtf8(scoreText.c_str()));
     y.setDefaultTextColor(QColor("#24d1ac"));
@@ -89,8 +89,8 @@ int jerry::getColumn4()
 {
     return column4;
 }
-void jerry::endGame(){
-    if(lives<=0){
+void jerry::endGame() {
+    if(lives <= 0) {
         //popup window with "You Lost"
         QMediaPlayer *music = new QMediaPlayer();
         music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/lose.wav"));
@@ -99,67 +99,67 @@ void jerry::endGame(){
         QMessageBox msg;
         msg.setText("You have lost!");
         QTimer cntDown;
-        int cnt=3;
-        std::string scoreText="YOU LOST";
+        int cnt = 3;
+        std::string scoreText = "YOU LOST";
         y.setPlainText(QString::fromUtf8(scoreText.c_str()));
         y.setDefaultTextColor(QColor("#ff0000"));
         y.setX(0);
         y.setY(200);
         y.setScale(10);
         scene()->addItem(&y);
-           QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
-                                if(--cnt < 0){
-                                    cntDown.stop();
-                                    msg.close();
-                                    lives=3;
-                                    this->updateLives();
-                                }
-                            });
-           cntDown.start(1000);
-           msg.exec();
-           qApp->quit();
-           QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-           //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
+        QObject::connect(&cntDown, &QTimer::timeout, [this, &msg, &cnt, &cntDown]()->void{
+            if(--cnt < 0) {
+                cntDown.stop();
+                msg.close();
+                lives = 3;
+                this->updateLives();
+            }
+        });
+        cntDown.start(1000);
+        msg.exec();
+        qApp->quit();
+        QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
+        //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
     }
 }
 void jerry::keyPressEvent(QKeyEvent * event)
 {
-    if(event->key() == Qt::Key_Up && data4[row4-1][column4] != -1){
+    if(event->key() == Qt::Key_Up && data4[row4 - 1][column4] != -1) {
         row4--;
-        jerpos=data4[row4][column4];
+        jerpos = data4[row4][column4];
     }
-    else if(event->key() == Qt::Key_Down && data4[row4+1][column4] != -1){
+    else if(event->key() == Qt::Key_Down && data4[row4 + 1][column4] != -1) {
         row4++;
-        jerpos=data4[row4][column4];
+        jerpos = data4[row4][column4];
 
     }
-    else if(event->key() == Qt::Key_Right && data4[row4][column4+1] != -1){
+    else if(event->key() == Qt::Key_Right && data4[row4][column4 + 1] != -1) {
         column4++;
-        jerpos=data4[row4][column4];
+        jerpos = data4[row4][column4];
 
-        QPixmap jer("JerryRight.png");
-        QPixmap jer2("JerryCheese.png");
-       jer = jer.scaledToWidth(50);
-        jer = jer.scaledToHeight(50);
-        jer2 = jer2.scaledToWidth(50);
-        jer2 = jer2.scaledToHeight(50);
-        hasCheese?setPixmap(jer2):setPixmap(jer);
-    }
-
-    else if(event->key() == Qt::Key_Left && data4[row4][column4-1] != -1){
-        column4--;
-        jerpos=data4[row4][column4];
-
-        QPixmap jer("Jerry3.png");
-        QPixmap jer2("JerryCheeseLeft.png");
+        QPixmap jer("../media/art/JerryRight.png");
+        QPixmap jer2("../media/art/JerryCheese.png");
         jer = jer.scaledToWidth(50);
         jer = jer.scaledToHeight(50);
         jer2 = jer2.scaledToWidth(50);
         jer2 = jer2.scaledToHeight(50);
-        hasCheese?setPixmap(jer2):setPixmap(jer);
+        hasCheese ? setPixmap(jer2) : setPixmap(jer);
     }
 
-    setPos(25+50*column4, 25+50*row4);
+    else if(event->key() == Qt::Key_Left && data4[row4][column4 - 1] != -1) {
+        column4--;
+        jerpos = data4[row4][column4];
+
+        QPixmap jer("../media/art/Jerry3.png");
+        QPixmap jer2("../media/art/JerryCheeseLeft.png");
+        jer = jer.scaledToWidth(50);
+        jer = jer.scaledToHeight(50);
+        jer2 = jer2.scaledToWidth(50);
+        jer2 = jer2.scaledToHeight(50);
+        hasCheese ? setPixmap(jer2) : setPixmap(jer);
+    }
+
+    setPos(25 + 50 * column4, 25 + 50 * row4);
 
     QList<QGraphicsItem*> items = collidingItems();
 
@@ -170,26 +170,26 @@ void jerry::keyPressEvent(QKeyEvent * event)
         music->setVolume(15);
         music->play();
 
-        hasCheese=false;
+        hasCheese = false;
         score++;
-        QPixmap jer("Jerry3.png");
+        QPixmap jer("../media/art/Jerry3.png");
         jer = jer.scaledToWidth(50);
         jer = jer.scaledToHeight(50);
         setPixmap(jer);
-        setPos(25+50*column4, 25+50*row4);
-        QPixmap ch("Cheese2.png");
+        setPos(25 + 50 * column4, 25 + 50 * row4);
+        QPixmap ch("../media/art/Cheese2.png");
         ch = ch.scaledToHeight(50);
         ch = ch.scaledToWidth(50);
         cheeseR.setPixmap(ch);
-        cheeseR.setPos(25+50*7, 25+50*7);
+        cheeseR.setPos(25 + 50 * 7, 25 + 50 * 7);
         scene()->addItem(&cheeseR);
         doTheThing(this);
-        if(score==4){
+        if(score == 4) {
             QMediaPlayer *music = new QMediaPlayer();
             music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/win.wav"));
             music->setVolume(15);
             music->play();
-            std::string scoreText="YOU WON";
+            std::string scoreText = "YOU WON";
             y.setPlainText(QString::fromUtf8(scoreText.c_str()));
             y.setDefaultTextColor(QColor("#11FF11"));
             y.setX(0);
@@ -199,37 +199,36 @@ void jerry::keyPressEvent(QKeyEvent * event)
             QMessageBox msg;
             msg.setText("You have won!");
             QTimer cntDown;
-            int cnt=8;
-               QObject::connect(&cntDown, &QTimer::timeout, [this,&msg,&cnt, &cntDown]()->void{
-                                    if(--cnt < 0){
-                                        cntDown.stop();
-                                        msg.close();
-                                    }
-                                });
-               cntDown.start(1000);
-               msg.exec();
-               qApp->quit();
-               QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
-               //TODO: ADD STH TO RESET THE WHOLE CHEESE & GAME
+            int cnt = 8;
+            QObject::connect(&cntDown, &QTimer::timeout, [this, &msg, &cnt, &cntDown]()->void{
+                if(--cnt < 0) {
+                    cntDown.stop();
+                    msg.close();
+                }
+            });
+            cntDown.start(1000);
+            msg.exec();
+            qApp->quit();
+            QProcess::startDetached(qApp->arguments()[0], qApp->arguments());
         }
 
     }
-    for(int i = 0; i<items.size(); i++)
+    for(int i = 0; i < items.size(); i++)
     {
         if(typeid(*items[i]) == typeid(cheese) && !hasCheese)
         {
             QMediaPlayer *music = new QMediaPlayer();
-            music->setMedia(QUrl("file:/home/elt0khy/tomAndJerry/eat.wav"));
+            music->setMedia(QUrl("file:../media/music/eat.wav"));
             music->setVolume(15);
             music->play();
             scene()->removeItem(items[i]);
-            QPixmap jerr("JerryCheese.png");
+            QPixmap jerr("../media/art/JerryCheese.png");
             jerr = jerr.scaledToWidth(50);
             jerr = jerr.scaledToHeight(50);
             setPixmap(jerr);
-            setPos(25+50*column4, 25+50*row4);
+            setPos(25 + 50 * column4, 25 + 50 * row4);
 
-            hasCheese=true;
+            hasCheese = true;
 
 
         }
@@ -242,14 +241,14 @@ void jerry::keyPressEvent(QKeyEvent * event)
             scene()->removeItem(items[i]);
             //invincible
             //maybe add sth in the future to make jerry bigger when invincible
-            invincible=true;
+            invincible = true;
             QEventLoop loop;
             QTimer::singleShot(5000, &loop, &QEventLoop::quit);
             loop.exec();
-            invincible=false;
+            invincible = false;
         }
 
-        else if(typeid(*items[i]) == typeid(Tom)){
+        else if(typeid(*items[i]) == typeid(Tom)) {
             if(!invincible) lives--;
             updateLives();
             endGame();
@@ -257,7 +256,7 @@ void jerry::keyPressEvent(QKeyEvent * event)
 
         }
     }
-    jerpos=data4[row4][column4];
+    jerpos = data4[row4][column4];
 
 }
 int jerry::getVertex()

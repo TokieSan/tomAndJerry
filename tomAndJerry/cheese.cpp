@@ -4,11 +4,11 @@ cheese::cheese(int initialRow, int initialColumn)
 {
     row2 = initialRow;
     column2 = initialColumn;
-    QPixmap che("Cheese2.png");
+    QPixmap che("../media/art/Cheese2.png");
     che = che.scaledToWidth(50);
     che = che.scaledToHeight(50);
     setPixmap(che);
-    setPos(25+50*column2, 25+50*row2);
+    setPos(25 + 50 * column2, 25 + 50 * row2);
 }
 void cheese::setRow2(int newRow2)
 {
